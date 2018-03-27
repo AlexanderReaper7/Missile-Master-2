@@ -28,27 +28,27 @@ namespace Missile_Master_2
                 if (keyboard.IsKeyDown(Keys.W) || keyboard.IsKeyDown(Keys.Up))
                 {
                     keysAreUp = false;
-                    if (selected.X < selectedMax.X)
+                    if (selected.Y < selectedMax.Y)
                     {
-                        selected.X++;
+                        selected.Y++;
                     }
                 }
 
                 if (keyboard.IsKeyDown(Keys.S) || keyboard.IsKeyDown(Keys.Down))
                 {
                     keysAreUp = false;
-                    if (selected.X > 0)
+                    if (selected.Y > 0)
                     {
-                        selected.X--;
+                        selected.Y--;
                     }
                 }
 
                 if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
                 {
                     keysAreUp = false;
-                    if (selected.Y < selectedMax.Y)
+                    if (selected.X < selectedMax.X)
                     {
-                        selected.Y++;
+                        selected.X++;
                     }
                 }
 
@@ -57,7 +57,7 @@ namespace Missile_Master_2
                     keysAreUp = false;
                     if (selected.X > 0)
                     {
-                        selected.Y--;
+                        selected.X--;
                     }
                 }
             }
@@ -68,6 +68,18 @@ namespace Missile_Master_2
         public bool IsEnterPressed()
         {
             if (keyboard.IsKeyDown(Keys.Enter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsEscPressed()
+        {
+            if (keyboard.IsKeyDown(Keys.Escape))
             {
                 return true;
             }
