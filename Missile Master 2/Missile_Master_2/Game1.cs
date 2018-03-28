@@ -15,11 +15,14 @@ namespace Missile_Master_2
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Menu menu;
-        MenuControlls menuControlls;
+        MainMenu mainMenu = new MainMenu();
 
         public static Vector2 screenBounds = new Vector2(1280, 720);
 
+        public static SpriteFont pixelArt32Normal;
+        public static SpriteFont pixelArt32Bold;
+
+        public static Texture2D mainMenuBG; // Menu background
         // GameStates
         public enum Gamestates
         {
@@ -51,6 +54,11 @@ namespace Missile_Master_2
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
+            pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
+
+            mainMenuBG = Content.Load<Texture2D>(@"images/MainMenuBG");
+
         }
 
         protected override void UnloadContent() {}
@@ -69,7 +77,7 @@ namespace Missile_Master_2
             switch(gameState)
             {
                 case Gamestates.Menu:
-                    menu.Update(gameTime);
+                    mainMenu.Update(gameTime);
                     break;
 
                 case Gamestates.Campaign:
@@ -91,11 +99,11 @@ namespace Missile_Master_2
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-
+            spriteBatch.Begin();
             switch (gameState)
             {
                 case Gamestates.Menu:
-                    menu.Draw(spriteBatch);
+                    mainMenu.Draw(spriteBatch);
                     break;
 
                 case Gamestates.Campaign:
@@ -110,7 +118,7 @@ namespace Missile_Master_2
                     this.Exit();
                     break;
             }
-
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
