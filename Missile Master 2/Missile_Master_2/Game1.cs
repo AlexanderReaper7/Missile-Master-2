@@ -11,28 +11,51 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Missile_Master_2
 {
+    /// <summary>
+    /// This is the main type for your game
+    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        /// <summary>
+        /// Main GraphicsDeviceManager
+        /// </summary>
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        MainMenu mainMenu;
 
+        /// <summary>
+        /// Main spriteBatch
+        /// </summary>
+        SpriteBatch spriteBatch;
+
+        /// <summary>
+        /// Size of game window
+        /// </summary>
         public static Vector2 screenBounds = new Vector2(1280, 720);
 
+        /// <summary>
+        /// Normal pixel-art sprite font in size 32pt
+        /// </summary>
         public static SpriteFont pixelArt32Normal;
+
+        /// <summary>
+        /// Bold pixel-art spritefont in size 32pt
+        /// </summary>
         public static SpriteFont pixelArt32Bold;
 
         public static Texture2D mainMenuBG; // Menu background
-        // GameStates
+        
+        /// <summary>
+        /// List of states for the game
+        /// </summary>
         public enum Gamestates
         {
-            Menu,
+            MainMenu,
             Campaign,
+            Ingame,
             LevelSelect,
             Exit
         }
 
-        public static Gamestates gameState = Gamestates.Menu;
+        public static Gamestates gameState = Gamestates.MainMenu;
 
         public Game1()
         {
@@ -40,6 +63,12 @@ namespace Missile_Master_2
             Content.RootDirectory = "Content";
         }
 
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
         protected override void Initialize()
         {
             graphics.PreferredBackBufferWidth = (int)screenBounds.X;
@@ -49,12 +78,16 @@ namespace Missile_Master_2
             base.Initialize();
         }
 
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            MainMenu mainMenu = new MainMenu();
-
+            //mainMenu = new MainMenu();
+            //campaign = new Campaign();
             pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
 
@@ -62,8 +95,17 @@ namespace Missile_Master_2
 
         }
 
-        protected override void UnloadContent() {}
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// all content.
+        /// </summary>
+        protected override void UnloadContent() { }
 
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
@@ -75,14 +117,14 @@ namespace Missile_Master_2
                 this.Exit();
             }
 
-            switch(gameState)
+            switch (gameState)
             {
-                case Gamestates.Menu:
-                    mainMenu.Update(gameTime);
+                case Gamestates.MainMenu:
+                    MainMenu.Update(gameTime);
                     break;
 
                 case Gamestates.Campaign:
-                    
+                    Campaign.Update(gameTime);
                     break;
 
                 case Gamestates.LevelSelect:
@@ -97,18 +139,22 @@ namespace Missile_Master_2
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
             switch (gameState)
             {
-                case Gamestates.Menu:
-                    mainMenu.Draw(spriteBatch);
+                case Gamestates.MainMenu:
+                    MainMenu.Draw(spriteBatch);
                     break;
 
                 case Gamestates.Campaign:
-
+                    Campaign.Draw(spriteBatch);
                     break;
 
                 case Gamestates.LevelSelect:

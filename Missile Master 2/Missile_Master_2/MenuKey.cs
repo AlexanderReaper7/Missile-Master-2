@@ -10,8 +10,12 @@ namespace Missile_Master_2
     class MenuKey
     {
         private bool isKeyUp;
+        private Keys key;
 
         public MenuKey(Keys key)
+        {
+            this.key = key;
+        }
 
     }
 }

@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Campaign.cs" />
-    <Compile Include="InGame.cs" />
     <Compile Include="LevelSelect.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="MenuControlls.cs" />
