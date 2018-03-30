@@ -15,7 +15,7 @@ namespace Missile_Master_2
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        MainMenu mainMenu = new MainMenu();
+        MainMenu mainMenu;
 
         public static Vector2 screenBounds = new Vector2(1280, 720);
 
@@ -53,6 +53,7 @@ namespace Missile_Master_2
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            MainMenu mainMenu = new MainMenu();
 
             pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
