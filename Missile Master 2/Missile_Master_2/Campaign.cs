@@ -24,24 +24,24 @@ namespace Missile_Master_2
         private static Vector2[] menuOptionsPos = { new Vector2(Game1.screenBounds.X / 8, 20), new Vector2(Game1.screenBounds.X / 8, 60), new Vector2(Game1.screenBounds.X / 8, 100), };
         private static Vector2 selected;
         private static MenuControlls menuControll = new MenuControlls(new Vector2(0, menuOptionsStr.Count() - 1));
-        
+
         public static void Update(GameTime gameTime)
         {
-            selected = menuControll.GetSelected(); // Updates selected
+            selected = menuControll.Update(); // Updates selected
 
             // Change gamestate to the selected one on ENTER
-            if (menuControll.IsKeyDown(Keys.Enter))
+            if (menuControll.IsEnterDown)
             {
                 Console.WriteLine("ENTER");
 
                 switch ((int)selected.Y)
                 {
                     case 0: // Continue
-                        SaveDataManager.ContinueCampaign();
+                        //SaveDataManager.ContinueCampaign();
                         break;
 
                     case 1: // New Campaign
-                        SaveDataManager.NewCampaign();
+                        //SaveDataManager.NewCampaign();
                         break;
 
                     case 2: // Back

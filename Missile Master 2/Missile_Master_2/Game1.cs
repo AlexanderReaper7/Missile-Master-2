@@ -42,7 +42,7 @@ namespace Missile_Master_2
         public static SpriteFont pixelArt32Bold;
 
         public static Texture2D mainMenuBG; // Menu background
-        
+
         /// <summary>
         /// List of states for the game
         /// </summary>

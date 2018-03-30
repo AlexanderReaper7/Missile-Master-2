@@ -10,7 +10,7 @@ namespace Missile_Master_2
     /// <summary>
     /// Controlls key logic for use in menus
     /// </summary>
-    class MenuKey
+    class MenuKey : IEquatable<MenuKey>
     {
         /// <summary>
         /// Is selected key state up?
@@ -21,9 +21,27 @@ namespace Missile_Master_2
         /// </summary>
         private Keys key;
         /// <summary>
-        /// used in updating keyboard
+        /// used when updating keyboard
         /// </summary>
         private KeyboardState keyboard;
+
+        public Keys Key { get { return key; } }
+
+        public bool Equals(MenuKey menuKey)
+        {
+            return menuKey.key.Equals(key);
+        }
+
+        public override bool Equals(object o)
+        {
+            return this.Equals(o as MenuKey);
+        }
+
+        public override int GetHashCode()
+        {
+            return key.GetHashCode();
+        }
+
         /// <summary>
         /// Creates a new instance of MenuKey with single key
         /// </summary>
