@@ -13,145 +13,54 @@ namespace Missile_Master_2
     /// </summary>
     class MenuControlls
     {
-        KeyboardState keyboard;
+        /// <summary>
+        /// Selected menu option
+        /// </summary>
         private Vector2 selected;
+        /// <summary>
+        /// Number of menu options
+        /// </summary>
         private Vector2 selectionMax;
-        private bool keysAreUp;
 
         /// <summary>
-        /// Make sure to '- 1' when using number of menu options menuOptionsStr.Count()
+        /// Dictionary of menukeys to check
+        /// </summary>
+        public Dictionary<MenuKey, bool> menuKeysDown = new Dictionary<MenuKey, bool>();
+
+        public Vector2 Selected
+        {
+            get { return selected; }
+        }
+
+        /// <summary>
+        /// Creates a new instance of MenuControlls
         /// </summary>
         /// <param name="selectionMax">Number of menu options</param>
         public MenuControlls(Vector2 selectionMax)
         {
             this.selectionMax = selectionMax;
+
+            menuKeysDown.Add(new MenuKey(Keys.W), false);
+            menuKeysDown.Add(new MenuKey(Keys.A), false);
+            menuKeysDown.Add(new MenuKey(Keys.S), false);
+            menuKeysDown.Add(new MenuKey(Keys.D), false);
+            menuKeysDown.Add(new MenuKey(Keys.Up), false);
+            menuKeysDown.Add(new MenuKey(Keys.Left), false);
+            menuKeysDown.Add(new MenuKey(Keys.Down), false);
+            menuKeysDown.Add(new MenuKey(Keys.Right), false);
+            menuKeysDown.Add(new MenuKey(Keys.Enter), false);
+            menuKeysDown.Add(new MenuKey(Keys.Escape), false);
+
         }
 
-        /// <summary>
-        /// Checks if selected key is down and returns it as an boolean value
-        /// </summary>
-        /// <param name="key">Name of key to check</param>
-        /// <returns></returns>
-        public bool IsKeyDown(Keys key)
+        public void Update(GameTime gameTime)
         {
-            keyboard = Keyboard.GetState(); // Update keyboard
-
-            if (keyboard.IsKeyDown(key)) // Check key
+            foreach (KeyValuePair<MenuKey, bool> item in menuKeysDown)
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Checks if selected key is up and returns it as an boolean value
-        /// </summary>
-        /// <param name="key">Name of key to check</param>
-        /// <returns></returns>
-        public bool IsKeyUp(Keys key)
-        {
-            keyboard = Keyboard.GetState(); // Update keyboard
-
-            if (keyboard.IsKeyUp(key)) // Check key
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool MenuKey(Keys key)
-        {
-            isKeyUp
-            keyboard = Keyboard.GetState(); // Update keyboard
-
-            if (keyboard.IsKeyDown(key)) // Check key
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Returns a Vector2 efter performing keyboard logic
-        /// </summary>
-        /// <returns>Selected item</returns>
-        public Vector2 GetSelected()
-        {
-            keyboard = Keyboard.GetState(); // Update keyboard
-            // Reset selected
-            if (keyboard.IsKeyDown(Keys.R)) 
-            {
-                selected = Vector2.Zero;
+                menuKeysDown[item.Key] = (item.Key.Update());
             }
 
-            // Detect if menu keys (W A S D UP DOWN LEFT RIGTH) are up
-            if (keyboard.IsKeyUp(Keys.S) && keyboard.IsKeyUp(Keys.Down) && keyboard.IsKeyUp(Keys.W) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.A) && keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.D) && keyboard.IsKeyUp(Keys.Right))
-            {
-                keysAreUp = true;
-            }
-
-            if (keysAreUp)
-            {
-                // W & Up, Y--
-                if (keyboard.IsKeyDown(Keys.W) || keyboard.IsKeyDown(Keys.Up))
-                {
-                    Console.WriteLine('W');
-                    keysAreUp = false;
-                    if (selected.Y > 0)
-                    {
-                        selected.Y--;
-                    }
-                    return selected;
-                }
-
-                // S & Down, Y++
-                if (keyboard.IsKeyDown(Keys.S) || keyboard.IsKeyDown(Keys.Down))
-                {
-                    Console.WriteLine('S');
-                    keysAreUp = false;
-                    if (selected.Y < selectionMax.Y)
-                    {
-                        selected.Y++;
-                    }
-                    return selected;
-                }
-
-                // D & Right, X++
-                if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
-                {
-                    Console.WriteLine('D');
-                    keysAreUp = false;
-                    if (selected.X < selectionMax.X)
-                    {
-                        selected.X++;
-                    }
-                    return selected;
-                }
-
-                // A & Left, X--
-                if (keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.Left))
-                {
-                    Console.WriteLine('A');
-                    keysAreUp = false;
-                    if (selected.X > 0)
-                    {
-                        selected.X--;
-                    }
-                    return selected;
-                }
-            }
-
-            Console.WriteLine(selected);
-            return selected; // Finish
+            if(menuKeysDown[])
         }
     }
 }

@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Missile_Master_2
 {
-    class SaveDataManager
+    /// <summary>
+    /// Handles most global variables
+    /// </summary>
+    static class SaveDataManager
     {
     }
 }

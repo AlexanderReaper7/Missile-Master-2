@@ -38,34 +38,34 @@ namespace Missile_Master_2
 
         static bool enterPrevDown;
 
-        /// <summary>
-        /// Updates MainMenu gamestate logic
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public static void Update(GameTime gameTime)
-        {
-            selected = menuControll.GetSelected(); // Updates selected
-            // Change gamestate to the selected one on ENTER
-            if (menuControll.IsKeyDown(Keys.Enter) && !enterPrevDown)
-            {
-                Console.WriteLine("ENTER");
-                enterPrevDown = true;
-                switch ((int)selected.Y)
-                {
-                    case 0:
-                        Game1.gameState = Game1.Gamestates.Campaign;
-                        break;
+        ///// <summary>
+        ///// Updates MainMenu gamestate logic
+        ///// </summary>
+        ///// <param name="gameTime"></param>
+        //public static void Update(GameTime gameTime)
+        //{
+        //    selected = menuControll.GetSelected(); // Updates selected
+        //    // Change gamestate to the selected one on ENTER
+        //    if (menuControll.IsKeyDown(Keys.Enter) && !enterPrevDown)
+        //    {
+        //        Console.WriteLine("ENTER");
+        //        enterPrevDown = true;
+        //        switch ((int)selected.Y)
+        //        {
+        //            case 0:
+        //                Game1.gameState = Game1.Gamestates.Campaign;
+        //                break;
 
-                    case 1:
-                        Game1.gameState = Game1.Gamestates.LevelSelect;
-                        break;
+        //            case 1:
+        //                Game1.gameState = Game1.Gamestates.LevelSelect;
+        //                break;
 
-                    case 2:
-                        Game1.gameState = Game1.Gamestates.Exit;
-                        break;
-                }
-            }
-        }
+        //            case 2:
+        //                Game1.gameState = Game1.Gamestates.Exit;
+        //                break;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Draws the MainMenu gamestate
