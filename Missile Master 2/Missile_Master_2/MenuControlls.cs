@@ -27,6 +27,7 @@ namespace Missile_Master_2
         /// Dictionary of menukeys to check
         /// </summary>
         public Dictionary<MenuKey, bool> menuKeysDown = new Dictionary<MenuKey, bool>();
+
         /// <summary>
         /// returns selected
         /// </summary>
@@ -50,7 +51,6 @@ namespace Missile_Master_2
         public MenuControlls(Vector2 selectionMax)
         {
             this.selectionMax = selectionMax;
-
             menuKeysDown.Add(new MenuKey(Keys.W), false);
             menuKeysDown.Add(new MenuKey(Keys.A), false);
             menuKeysDown.Add(new MenuKey(Keys.S), false);
@@ -68,52 +68,36 @@ namespace Missile_Master_2
         {
             foreach (var item in menuKeysDown)
             {
-                menuKeysDown[item.Key] = (item.Key.Update());
+                item.Value = item.Key.Update;
 
-                if (menuKeysDown[item.Key].Equals(new MenuKey(Keys.W)) || menuKeysDown[item.Key].Equals(new MenuKey(Keys.Up)))
+                if( item.Key.Key == Keys.W || item.Key.Key == Keys.Up && item.Value)
                 {
                     if (selected.Y > 0)
                     {
                         selected.Y--;
                     }
                 }
-
-                if (menuKeysDown[item.Key].Equals(new MenuKey(Keys.A)) || menuKeysDown[item.Key].Equals(new MenuKey(Keys.Left)))
+                if (item.Key.Key == Keys.A || item.Key.Key == Keys.Up && item.Value)
                 {
-                    if (selected.X > 0)
+                    if (selected.X > selectionMax.X)
                     {
                         selected.X--;
                     }
                 }
-
-                if (menuKeysDown[item.Key].Equals(new MenuKey(Keys.S)) || menuKeysDown[item.Key].Equals(new MenuKey(Keys.Down)))
+                if (item.Key.Key == Keys.S || item.Key.Key == Keys.Down && item.Value)
                 {
                     if (selected.Y < selectionMax.Y)
                     {
                         selected.Y++;
                     }
                 }
-
-                if (menuKeysDown[item.Key].Equals(new MenuKey(Keys.D)) || menuKeysDown[item.Key].Equals(new MenuKey(Keys.Right)))
+                if (item.Key.Key == Keys.D || item.Key.Key == Keys.Right && item.Value)
                 {
-                    if (selected.X < selectionMax.X)
+                    if (selected.X < 0)
                     {
                         selected.X++;
                     }
                 }
-
-                if (menuKeysDown[item.Key].Equals(new MenuKey(Keys.Enter)))
-                {
-                    isEnterDown = true;
-                    selected = Vector2.Zero; // Reset selected
-                }
-
-                if (menuKeysDown[item.Key].Equals(new MenuKey(Keys.Escape)))
-                {
-                    selected = Vector2.Zero; // Reset selected
-                }
-
-                menuKeysDown[item.Key] = false;
             }
             return selected;
         }
