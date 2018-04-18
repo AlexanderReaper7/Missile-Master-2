@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace Missile_Master_2
 {
@@ -19,12 +12,12 @@ namespace Missile_Master_2
         /// <summary>
         /// Main GraphicsDeviceManager
         /// </summary>
-        GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager graphics;
 
         /// <summary>
         /// Main spriteBatch
         /// </summary>
-        SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
 
         /// <summary>
         /// Size of game window
@@ -32,12 +25,12 @@ namespace Missile_Master_2
         public static Vector2 screenBounds = new Vector2(1280, 720);
 
         /// <summary>
-        /// Normal pixel-art sprite font in size 32pt
+        /// Normal pixel-art SpriteFont in size 32pt
         /// </summary>
         public static SpriteFont pixelArt32Normal;
 
         /// <summary>
-        /// Bold pixel-art spritefont in size 32pt
+        /// Bold pixel-art SpriteFont in size 32pt
         /// </summary>
         public static SpriteFont pixelArt32Bold;
         /// <summary>
@@ -129,7 +122,7 @@ namespace Missile_Master_2
                     break;
 
                 case Gamestates.Campaign:
-                    Campaign.Update(gameTime);
+                    //Campaign.Update(gameTime);
                     break;
 
                 case Gamestates.Ingame:
@@ -163,7 +156,7 @@ namespace Missile_Master_2
                     break;
 
                 case Gamestates.Campaign:
-                    Campaign.Draw(spriteBatch);
+                    //Campaign.Draw(spriteBatch);
                     break;
 
                 case Gamestates.LevelSelect:

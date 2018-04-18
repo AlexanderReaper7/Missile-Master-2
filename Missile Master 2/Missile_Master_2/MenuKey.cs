@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Input;
 namespace Missile_Master_2
 {
     /// <summary>
-    /// Controlls key logic for use in menus
+    /// Controls key logic for use in menus
     /// </summary>
-    class MenuKey : IEquatable<MenuKey>
+    class MenuKey
     {
         /// <summary>
         /// Is selected key state up?
@@ -27,27 +27,13 @@ namespace Missile_Master_2
 
         public Keys Key { get { return key; } }
 
-        public bool Equals(MenuKey menuKey)
-        {
-            return menuKey.key.Equals(key);
-        }
-
-        public override bool Equals(object o)
-        {
-            return this.Equals(o as MenuKey);
-        }
-
-        public override int GetHashCode()
-        {
-            return key.GetHashCode();
-        }
-
         /// <summary>
         /// Creates a new instance of MenuKey with single key
         /// </summary>
         /// <param name="key">ID of key to use</param>
         public MenuKey(Keys key)
         {
+            Console.WriteLine(key.ToString());
             this.key = key;
         }
 
