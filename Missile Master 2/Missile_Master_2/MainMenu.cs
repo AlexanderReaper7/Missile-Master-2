@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -31,12 +32,19 @@ namespace Missile_Master_2
         /// </summary>
         private static Vector2 selected;
 
+        private static Texture2D background;
+
         /// <summary>
         /// Controlls keyboard actions in menus
         /// </summary>
         private static MenuControlls menuControll = new MenuControlls(new Vector2(0, menuOptionsStr.Count() - 1));
 
         static bool enterPrevDown;
+
+        public static void LoadContent(ContentManager content)
+        {
+            background = content.Load<Texture2D>(@"images/MainMenuBG");
+        }
 
         /// <summary>
         /// Updates MainMenu gamestate logic
@@ -73,7 +81,7 @@ namespace Missile_Master_2
         /// <param name="spriteBatch">Enables a group of sprites to be drawn using the same settings.</param>
         public static void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.mainMenuBG, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); // Background
+            spriteBatch.Draw(background, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); // Background
 
             for (int i = 0; i < menuOptionsStr.Count(); i++)
             {

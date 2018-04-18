@@ -40,8 +40,14 @@ namespace Missile_Master_2
         /// Bold pixel-art spritefont in size 32pt
         /// </summary>
         public static SpriteFont pixelArt32Bold;
-
-        public static Texture2D mainMenuBG; // Menu background
+        /// <summary>
+        /// Menu background
+        /// </summary>
+        public static Texture2D mainMenuBG;
+        /// <summary>
+        /// Sprite sheet for non background textures
+        /// </summary>
+        public static Texture2D SpriteSheet;
 
         /// <summary>
         /// List of states for the game
@@ -55,7 +61,7 @@ namespace Missile_Master_2
             Exit
         }
 
-        public static Gamestates gameState = Gamestates.MainMenu;
+        public static Gamestates gameState = Gamestates.Ingame;
 
         public Game1()
         {
@@ -86,12 +92,11 @@ namespace Missile_Master_2
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //mainMenu = new MainMenu();
-            //campaign = new Campaign();
+
             pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
 
-            mainMenuBG = Content.Load<Texture2D>(@"images/MainMenuBG");
+            SpriteSheet = Content.Load<Texture2D>(@"images/SpriteSheet");
 
         }
 
@@ -125,6 +130,10 @@ namespace Missile_Master_2
 
                 case Gamestates.Campaign:
                     Campaign.Update(gameTime);
+                    break;
+
+                case Gamestates.Ingame:
+                    InGame.Update();
                     break;
 
                 case Gamestates.LevelSelect:

@@ -29,7 +29,11 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.AudioImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Notes.txt">
+      <Name>Notes</Name>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Font\PixelArt32Normal.spritefont">
       <Name>PixelArt32Normal</Name>
@@ -47,6 +51,13 @@
   <ItemGroup>
     <Compile Include="images\MainMenuBG_4K.png">
       <Name>MainMenuBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="images\V-2.png">
+      <Name>V-2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

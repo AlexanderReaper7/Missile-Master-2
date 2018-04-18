@@ -178,13 +178,14 @@ namespace Missile_Master_2
 
             timeForCurrentFrame += elapsed;
 
+            // Go to next frame
             if (timeForCurrentFrame >= FrameTime)
             {
                 currentFrame = (currentFrame + 1) % (frames.Count);
                 timeForCurrentFrame = 0.0f;
             }
 
-            position += (velocity * elapsed);
+            position += (velocity * elapsed); // update position
         }
         /// <summary>
         /// Draws the sprite
