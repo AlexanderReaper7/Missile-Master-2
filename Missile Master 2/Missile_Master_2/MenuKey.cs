@@ -12,6 +12,8 @@ namespace Missile_Master_2
     /// </summary>
     class MenuKey
     {
+        private Tuple<Keys, bool> valuePair;
+
         /// <summary>
         /// Is selected key state up?
         /// </summary>
@@ -19,23 +21,25 @@ namespace Missile_Master_2
         /// <summary>
         /// Key ID
         /// </summary>
-        private Keys key;
+        //private Keys key;
         /// <summary>
         /// used when updating keyboard
         /// </summary>
         private KeyboardState keyboard;
 
-        public Keys Key { get { return key; } }
+        public MenuKey(Keys key)
+        {
+            Console.WriteLine("Added MenuKey " + key.ToString());
+
+            valuePair = new Tuple<Keys, bool>(key, false);
+        }
+
 
         /// <summary>
         /// Creates a new instance of MenuKey with single key
         /// </summary>
         /// <param name="key">ID of key to use</param>
-        public MenuKey(Keys key)
-        {
-            Console.WriteLine(key.ToString());
-            this.key = key;
-        }
+
 
         /// <summary>
         /// Update MenuKey logic

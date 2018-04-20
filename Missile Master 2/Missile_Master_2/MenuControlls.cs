@@ -23,11 +23,8 @@ namespace Missile_Master_2
         private Vector2 selectionMax;
 
         private bool isEnterDown;
-        /// <summary>
-        /// Dictionary of menukeys to check
-        /// </summary>
-        public Dictionary<MenuKey, bool> menuKeysDown = new Dictionary<MenuKey, bool>();
 
+        MenuKey[] menuKeys;
         /// <summary>
         /// returns selected
         /// </summary>
@@ -51,47 +48,37 @@ namespace Missile_Master_2
         public MenuControlls(Vector2 selectionMax)
         {
             this.selectionMax = selectionMax;
-            menuKeysDown.Add(new MenuKey(Keys.W), false);
-            menuKeysDown.Add(new MenuKey(Keys.A), false);
-            menuKeysDown.Add(new MenuKey(Keys.S), false);
-            menuKeysDown.Add(new MenuKey(Keys.D), false);
-            menuKeysDown.Add(new MenuKey(Keys.Up), false);
-            menuKeysDown.Add(new MenuKey(Keys.Left), false);
-            menuKeysDown.Add(new MenuKey(Keys.Down), false);
-            menuKeysDown.Add(new MenuKey(Keys.Right), false);
-            menuKeysDown.Add(new MenuKey(Keys.Enter), false);
-            menuKeysDown.Add(new MenuKey(Keys.Escape), false);
-
         }
 
         public Vector2 Update()
         {
-            foreach (var item in menuKeysDown)
+            foreach (var menukey in menuKeys)
             {
-                item.Value = item.Key.Update;
-
-                if( item.Key.Key == Keys.W || item.Key.Key == Keys.Up && item.Value)
+                if (menukey.Key == Keys.W || menukey.Key == Keys.Up && menukey.IsKeyDown)
                 {
                     if (selected.Y > 0)
                     {
                         selected.Y--;
                     }
                 }
-                if (item.Key.Key == Keys.A || item.Key.Key == Keys.Up && item.Value)
+
+                if (menukey.Key.Key == Keys.A || menukey.Key.Key == Keys.Up && menukey.Value)
                 {
                     if (selected.X > selectionMax.X)
                     {
                         selected.X--;
                     }
                 }
-                if (item.Key.Key == Keys.S || item.Key.Key == Keys.Down && item.Value)
+
+                if (menukey.Key.Key == Keys.S || menukey.Key.Key == Keys.Down && menukey.Value)
                 {
                     if (selected.Y < selectionMax.Y)
                     {
                         selected.Y++;
                     }
                 }
-                if (item.Key.Key == Keys.D || item.Key.Key == Keys.Right && item.Value)
+
+                if (menukey.Key.Key == Keys.D || menukey.Key.Key == Keys.Right && menukey.Value)
                 {
                     if (selected.X < 0)
                     {
@@ -99,6 +86,7 @@ namespace Missile_Master_2
                     }
                 }
             }
+
             return selected;
         }
     }
