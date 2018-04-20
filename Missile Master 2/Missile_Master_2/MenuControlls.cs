@@ -24,7 +24,7 @@ namespace Missile_Master_2
 
         private bool isEnterDown;
 
-        MenuKey[] menuKeys;
+        MenuKey[] menuKeys = new MenuKey[] (new MenuKey(Keys.W), new MenuKey(Keys.A), new MenuKey(Keys.S), new MenuKey(Keys.D), new MenuKey(Keys.Up), new MenuKey(Keys.Left), new MenuKey(Keys.Down), new MenuKey(Keys.Right), new MenuKey(Keys.Enter));
         /// <summary>
         /// returns selected
         /// </summary>
@@ -54,7 +54,9 @@ namespace Missile_Master_2
         {
             foreach (var menukey in menuKeys)
             {
-                if (menukey.Key == Keys.W || menukey.Key == Keys.Up && menukey.IsKeyDown)
+                menukey.Update();
+
+                if ((menukey.Key == Keys.W || menukey.Key == Keys.Up) && menukey.IsKeyDown)
                 {
                     if (selected.Y > 0)
                     {
@@ -62,7 +64,7 @@ namespace Missile_Master_2
                     }
                 }
 
-                if (menukey.Key.Key == Keys.A || menukey.Key.Key == Keys.Up && menukey.Value)
+                if ((menukey.Key == Keys.A || menukey.Key == Keys.Left) && menukey.IsKeyDown)
                 {
                     if (selected.X > selectionMax.X)
                     {
@@ -70,7 +72,7 @@ namespace Missile_Master_2
                     }
                 }
 
-                if (menukey.Key.Key == Keys.S || menukey.Key.Key == Keys.Down && menukey.Value)
+                if ((menukey.Key == Keys.S || menukey.Key == Keys.Down) && menukey.IsKeyDown)
                 {
                     if (selected.Y < selectionMax.Y)
                     {
@@ -78,7 +80,7 @@ namespace Missile_Master_2
                     }
                 }
 
-                if (menukey.Key.Key == Keys.D || menukey.Key.Key == Keys.Right && menukey.Value)
+                if ((menukey.Key == Keys.D || menukey.Key == Keys.Right) && menukey.IsKeyDown)
                 {
                     if (selected.X < 0)
                     {
