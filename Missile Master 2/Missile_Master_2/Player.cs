@@ -52,8 +52,8 @@ namespace Missile_Master_2
         private bool collision(Rectangle object1, Color[] data1, Rectangle object2, Color[] data2)
         {
 
-            var RotatedP0 = new Vector2.Transform(new Vector2(object2.Top, object2.Left), Matrix.CreateRotationZ(angle));
-            var RotatedP1 = new Vector2.Transform(new Vector2(object2.Bottom, object2.Right), Matrix.CreateRotationZ(angle));
+            var RotatedP0 = Vector2.Transform(new Vector2(object2.Top, object2.Left), Matrix.CreateRotationZ(angle));
+            var RotatedP1 = Vector2.Transform(new Vector2(object2.Bottom, object2.Right), Matrix.CreateRotationZ(angle));
 
 
             if (object1.Bottom < RotatedP0.Y)
