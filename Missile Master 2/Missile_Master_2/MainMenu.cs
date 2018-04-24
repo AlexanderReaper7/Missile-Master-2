@@ -38,8 +38,6 @@ namespace Missile_Master_2
         /// Controlls keyboard actions in menus
         /// </summary>
         private static MenuControlls menuControll = new MenuControlls(new Vector2(0, menuOptionsStr.Count() - 1));
-        
-        static bool enterPrevDown;
 
         public static void LoadContent(ContentManager content)
         {
@@ -51,16 +49,16 @@ namespace Missile_Master_2
         /// </summary>
         /// <param name="gameTime"></param>
         public static void Update(GameTime gameTime)
-        {        
-            selected = menuControll.Update(); // Updates selected
+        {
+            selected = menuControll.Update(); // Updates selected menu option
             // Change gamestate to the selected one on ENTER
             if (menuControll.IsEnterDown)
             {
-                Console.WriteLine("ENTER");
-                enterPrevDown = true;
+                Console.WriteLine("ENTER PRESSED");
                 switch ((int)selected.Y)
                 {
                     case 0:
+                        Console.WriteLine("campaign");
                         Game1.gameState = Game1.Gamestates.Campaign;
                         break;
 

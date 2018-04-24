@@ -37,10 +37,6 @@ namespace Missile_Master_2
         /// Menu background
         /// </summary>
         public static Texture2D mainMenuBG;
-        /// <summary>
-        /// Sprite sheet for non background textures
-        /// </summary>
-        public static Texture2D SpriteSheet;
 
         /// <summary>
         /// List of states for the game
@@ -54,7 +50,7 @@ namespace Missile_Master_2
             Exit
         }
 
-        public static Gamestates gameState = Gamestates.Ingame;
+        public static Gamestates gameState = Gamestates.MainMenu;
 
         public Game1()
         {
@@ -85,12 +81,9 @@ namespace Missile_Master_2
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            MainMenu.LoadContent(Content);
             pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
-
-            SpriteSheet = Content.Load<Texture2D>(@"images/SpriteSheet");
-
         }
 
         /// <summary>

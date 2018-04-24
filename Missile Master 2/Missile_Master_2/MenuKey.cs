@@ -12,26 +12,37 @@ namespace Missile_Master_2
     /// </summary>
     class MenuKey
     {
+        #region Fields
+
         /// <summary>
         /// Is selected key state up?
         /// </summary>
         private bool isKeyUp;
+
         /// <summary>
         /// Is selected key state down?
         /// </summary>
         private bool isKeyDown;
+
         /// <summary>
         /// Key ID
         /// </summary>
         private Keys key;
+
         /// <summary>
         /// used when updating keyboard
         /// </summary>
         private KeyboardState keyboard;
 
+        #endregion
+
+        #region Properties
+
         public Keys Key { get { return key; } }
 
         public bool IsKeyDown { get { return isKeyDown; } }
+
+        #endregion
 
         /// <summary>
         /// Creates a new instance of MenuKey with single key

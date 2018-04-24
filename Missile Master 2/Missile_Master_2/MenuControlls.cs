@@ -13,18 +13,32 @@ namespace Missile_Master_2
     /// </summary>
     class MenuControlls
     {
+        #region Fields
+
         /// <summary>
         /// Selected menu option
         /// </summary>
         private Vector2 selected;
+
         /// <summary>
         /// Number of menu options
         /// </summary>
         private Vector2 selectionMax;
 
+        /// <summary>
+        /// used in 
+        /// </summary>
         private bool isEnterDown;
+        private bool isEscapeDown;
+        /// <summary>
+        /// Array of MenuKey, every key is checked in Update() 
+        /// </summary>
+        MenuKey[] menuKeys = new MenuKey[] { new MenuKey(Keys.W), new MenuKey(Keys.A), new MenuKey(Keys.S), new MenuKey(Keys.D), new MenuKey(Keys.Up), new MenuKey(Keys.Left), new MenuKey(Keys.Down), new MenuKey(Keys.Right), new MenuKey(Keys.Enter), new MenuKey(Keys.Escape) };
 
-        MenuKey[] menuKeys = new MenuKey[] (new MenuKey(Keys.W), new MenuKey(Keys.A), new MenuKey(Keys.S), new MenuKey(Keys.D), new MenuKey(Keys.Up), new MenuKey(Keys.Left), new MenuKey(Keys.Down), new MenuKey(Keys.Right), new MenuKey(Keys.Enter));
+        #endregion
+
+        #region Properties 
+
         /// <summary>
         /// returns selected
         /// </summary>
@@ -41,6 +55,18 @@ namespace Missile_Master_2
 
         }
 
+        public bool IsEscapeDown
+        {
+
+            get { return isEscapeDown; }
+            set { isEscapeDown = value; }
+
+        }
+
+        #endregion
+
+        #region Constructors
+
         /// <summary>
         /// Creates a new instance of MenuControlls
         /// </summary>
@@ -49,6 +75,8 @@ namespace Missile_Master_2
         {
             this.selectionMax = selectionMax;
         }
+
+        #endregion
 
         public Vector2 Update()
         {
@@ -87,8 +115,31 @@ namespace Missile_Master_2
                         selected.X++;
                     }
                 }
-            }
 
+                if (menukey.Key == Keys.Enter)
+                {
+                    if (menukey.IsKeyDown)
+                    {
+                        isEnterDown = true;
+                    }
+                    else
+                    {
+                        isEnterDown = false;
+                    }
+                }
+
+                if (menukey.Key == Keys.Escape)
+                {
+                    if (menukey.IsKeyDown)
+                    {
+                        isEnterDown = true;
+                    }
+                    else
+                    {
+                        isEnterDown = false;
+                    }
+                }
+            }
             return selected;
         }
     }
