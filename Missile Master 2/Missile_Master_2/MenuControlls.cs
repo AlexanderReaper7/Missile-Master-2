@@ -84,10 +84,13 @@ namespace Missile_Master_2
             {
                 menukey.Update();
 
+                // Is W or UP arrow pressed
                 if ((menukey.Key == Keys.W || menukey.Key == Keys.Up) && menukey.IsKeyDown)
                 {
+                    // And selected.Y is larger than 0, preventing it from becoming negative
                     if (selected.Y > 0)
                     {
+                        // Subtract selected.Y by 1
                         selected.Y--;
                     }
                 }
@@ -132,11 +135,11 @@ namespace Missile_Master_2
                 {
                     if (menukey.IsKeyDown)
                     {
-                        isEnterDown = true;
+                        isEscapeDown = true;
                     }
                     else
                     {
-                        isEnterDown = false;
+                        isEscapeDown = false;
                     }
                 }
             }
