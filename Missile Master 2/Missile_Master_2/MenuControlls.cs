@@ -9,7 +9,7 @@ using System.Text;
 namespace Missile_Master_2
 {
     /// <summary>
-    /// Controlls keyboard logic in menus
+    /// An object used for easy controll in menues using the keyboard
     /// </summary>
     class MenuControlls
     {
@@ -80,69 +80,89 @@ namespace Missile_Master_2
 
         public Vector2 Update()
         {
-            foreach (var menukey in menuKeys)
+            // For every MenuKey in the menuKeys array
+            foreach (MenuKey menukey in menuKeys)
             {
+                // Update the current MenuKey in menuKeys array
                 menukey.Update();
 
-                // Is W or UP arrow pressed
+                // When W or UP arrow keys are pressed
                 if ((menukey.Key == Keys.W || menukey.Key == Keys.Up) && menukey.IsKeyDown)
                 {
-                    // And selected.Y is larger than 0, preventing it from becoming negative
+                    // And selected.Y is GREATER THAN 0, preventing it from becoming negative,
                     if (selected.Y > 0)
                     {
-                        // Subtract selected.Y by 1
+                        // then subtract selected.Y by 1
                         selected.Y--;
                     }
                 }
 
+                // When A or Left arrow keys are pressed
                 if ((menukey.Key == Keys.A || menukey.Key == Keys.Left) && menukey.IsKeyDown)
                 {
-                    if (selected.X > selectionMax.X)
+                    // And selected.X is GREATER THAN 0, preventing it from becoming negative
+                    if (selected.X > 0)
                     {
+                        // Then subtract selected.X by 1
                         selected.X--;
                     }
                 }
 
+                // When S or Down arrow keys are pressed
                 if ((menukey.Key == Keys.S || menukey.Key == Keys.Down) && menukey.IsKeyDown)
                 {
+                    // And selected.Y is LESS THAN selectionMax.Y, preventing it from exceeding maximum Y selection range,
                     if (selected.Y < selectionMax.Y)
                     {
+                        // Then add selected.Y by 1
                         selected.Y++;
                     }
                 }
 
+                // When D or Right arrow keys are pressed
                 if ((menukey.Key == Keys.D || menukey.Key == Keys.Right) && menukey.IsKeyDown)
                 {
-                    if (selected.X < 0)
+                    // And selected.X is LESS THAN selectionMax.X, preventing it from exceeding maximum X selection range, 
+                    if (selected.X < selectionMax.X)
                     {
+                        // Then add selected.X by 1
                         selected.X++;
                     }
                 }
 
+                // If current menukey is Enter
                 if (menukey.Key == Keys.Enter)
                 {
+                    // And it is pressed
                     if (menukey.IsKeyDown)
                     {
+                        // Then set isEnterDown to true
                         isEnterDown = true;
                     }
                     else
                     {
+                        // Else set isEnterDown to false
                         isEnterDown = false;
                     }
                 }
 
+                // If current menukey is Escape
                 if (menukey.Key == Keys.Escape)
                 {
+                    // And it is pressed
                     if (menukey.IsKeyDown)
                     {
+                        // Then set isEscapeDown to true
                         isEscapeDown = true;
                     }
                     else
                     {
+                        // Else set isEnterDown to false
                         isEscapeDown = false;
                     }
                 }
             }
+            // Return current selected
             return selected;
         }
     }

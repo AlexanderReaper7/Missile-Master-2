@@ -115,7 +115,7 @@ namespace Missile_Master_2
                     break;
 
                 case Gamestates.Campaign:
-                    //Campaign.Update(gameTime);
+                    Campaign.Update(gameTime);
                     break;
 
                 case Gamestates.Ingame:
@@ -149,7 +149,7 @@ namespace Missile_Master_2
                     break;
 
                 case Gamestates.Campaign:
-                    //Campaign.Draw(spriteBatch);
+                    Campaign.Draw(spriteBatch);
                     break;
 
                 case Gamestates.LevelSelect:

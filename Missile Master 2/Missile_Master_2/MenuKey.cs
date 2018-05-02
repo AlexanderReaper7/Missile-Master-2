@@ -8,19 +8,20 @@ using Microsoft.Xna.Framework.Input;
 namespace Missile_Master_2
 {
     /// <summary>
-    /// Controls key logic for use in menus
+    /// An object used in MenuControlls,
+    /// Prevents spam when pressing buttons in menues
     /// </summary>
     class MenuKey
     {
         #region Fields
 
         /// <summary>
-        /// Is selected key state up?
+        /// was the selected key up during last check?
         /// </summary>
-        private bool isKeyUp;
+        private bool wasKeyUp;
 
         /// <summary>
-        /// Is selected key state down?
+        /// Is selected key down?
         /// </summary>
         private bool isKeyDown;
 
@@ -38,11 +39,33 @@ namespace Missile_Master_2
 
         #region Properties
 
-        public Keys Key { get { return key; } }
+        /// <summary>
+        /// The set key for this MenuKey
+        /// </summary>
+        public Keys Key
+        {
+            get { return key; }
+        }
 
-        public bool IsKeyDown { get { return isKeyDown; } }
+        /// <summary>
+        /// The Boolean value representing if the set key was up during last check
+        /// </summary>
+        public bool WasKeyUp
+        {
+            get { return wasKeyUp; }
+        }
+
+        /// <summary>
+        /// The Boolean value representing if the set key is currently pressed down
+        /// </summary>
+        public bool IsKeyDown
+        {
+            get { return isKeyDown; }
+        }
 
         #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Creates a new instance of MenuKey with single key
@@ -54,21 +77,31 @@ namespace Missile_Master_2
             this.key = key;
         }
 
+        #endregion
+
+        #region Instance Methods
+
         /// <summary>
         /// Update MenuKey logic
         /// </summary>
         /// <returns>Key is pressed</returns>
         public void Update()
         {
+            // Get current keyboard state 
             keyboard = Keyboard.GetState();
+
+            // If key is up
             if (keyboard.IsKeyUp(key))
             {
-                isKeyUp = true;
+                // Then set wasKeyUp to true
+                wasKeyUp = true;
             }
 
-            if (keyboard.IsKeyDown(key) && isKeyUp)
+            // If key is up and was up before, preventing 
+            if (keyboard.IsKeyDown(key) && wasKeyUp)
             {
-                isKeyUp = false;
+                // Then set wasKeyUp to false and isKeyDown to true,
+                wasKeyUp = false;
                 isKeyDown = true;
             }
             else
@@ -76,6 +109,8 @@ namespace Missile_Master_2
                 isKeyDown = false;
             }
         }
+
+        #endregion
 
     }
 }

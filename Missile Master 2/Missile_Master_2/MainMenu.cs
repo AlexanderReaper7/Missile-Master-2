@@ -15,6 +15,7 @@ namespace Missile_Master_2
     /// </summary>
     static class MainMenu
     {
+        // TODO : Add custom font
         // private static SpriteFont pixelArt32Normal = Game1.pixelArt32Normal;
 
         /// <summary>
@@ -54,12 +55,13 @@ namespace Missile_Master_2
             // Change gamestate to the selected one on ENTER
             if (menuControll.IsEnterDown)
             {
-                Console.WriteLine("ENTER PRESSED");
                 switch ((int)selected.Y)
                 {
                     case 0:
-                        Console.WriteLine("campaign");
-                        Game1.gameState = Game1.Gamestates.Campaign;
+                        Console.WriteLine("Entering Campaign");
+                        // TODO : Add campaign as an in-between menu
+                        //Game1.gameState = Game1.Gamestates.Campaign;
+                        Game1.gameState = Game1.Gamestates.Ingame;
                         break;
 
                     case 1:

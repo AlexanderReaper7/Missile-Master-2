@@ -14,6 +14,7 @@ namespace Missile_Master_2
     /// </summary>
     static class Campaign
     {
+        #region Fields
         /// <summary>
         /// String array of menu option names
         /// </summary>
@@ -24,7 +25,9 @@ namespace Missile_Master_2
         private static Vector2[] menuOptionsPos = { new Vector2(Game1.screenBounds.X / 8, 20), new Vector2(Game1.screenBounds.X / 8, 60), new Vector2(Game1.screenBounds.X / 8, 100), };
         private static Vector2 selected;
         private static MenuControlls menuControll = new MenuControlls(new Vector2(0, menuOptionsStr.Count() - 1));
+        #endregion
 
+        #region Static Methods
         public static void Update(GameTime gameTime)
         {
             selected = menuControll.Update(); // Updates selected
@@ -37,11 +40,11 @@ namespace Missile_Master_2
                 switch ((int)selected.Y)
                 {
                     case 0: // Continue
-                        //SaveDataManager.ContinueCampaign();
+                        Game1.gameState = Game1.Gamestates.Ingame;
                         break;
 
                     case 1: // New Campaign
-                        //SaveDataManager.NewCampaign();
+
                         break;
 
                     case 2: // Back
@@ -68,5 +71,6 @@ namespace Missile_Master_2
             }
         }
 
+        #endregion
     }
 }

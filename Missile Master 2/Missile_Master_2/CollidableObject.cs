@@ -115,6 +115,8 @@ namespace Missile_Master_2
             this.LoadTexture(texture);
             this.position = position;
             this.rotation = rotation;
+
+            Console.WriteLine("Created new CollidableObject");
         }
 
         #endregion
