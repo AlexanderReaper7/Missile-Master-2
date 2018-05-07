@@ -82,6 +82,7 @@ namespace Missile_Master_2
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             MainMenu.LoadContent(Content);
+            InGame.Load(Content, GraphicsDevice);
             pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
         }

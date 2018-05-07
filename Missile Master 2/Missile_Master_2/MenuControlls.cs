@@ -78,6 +78,11 @@ namespace Missile_Master_2
 
         #endregion
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>New Vector2 position</returns>
         public Vector2 Update()
         {
             // For every MenuKey in the menuKeys array
