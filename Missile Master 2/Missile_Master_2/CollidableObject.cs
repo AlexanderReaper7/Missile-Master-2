@@ -28,6 +28,7 @@ namespace Missile_Master_2
         public Vector2 Position
         {
             get { return this.position; }
+            set { position = value; }
         }
 
         /// <summary>
@@ -115,8 +116,6 @@ namespace Missile_Master_2
             this.LoadTexture(texture);
             this.position = position;
             this.rotation = rotation;
-
-            Console.WriteLine("Created new CollidableObject");
         }
 
         #endregion
@@ -216,6 +215,17 @@ namespace Missile_Master_2
         {
             this.LoadTexture(texture);
             this.origin = origin;
+        }
+
+        /// <summary>
+        /// Unofficial method for moving and rotating object
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        public void Update(Vector2 position, float rotation)
+        {
+            this.position = position;
+            this.rotation = rotation;
         }
 
         #endregion

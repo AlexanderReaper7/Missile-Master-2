@@ -35,8 +35,6 @@ namespace Missile_Master_2
             // Change gamestate to the selected menu option upon ENTER
             if (menuControll.IsEnterDown)
             {
-                Console.WriteLine("ENTER");
-
                 switch ((int)selected.Y)
                 {
                     case 0: // Continue
@@ -61,7 +59,7 @@ namespace Missile_Master_2
         public static void Draw(SpriteBatch spriteBatch)
         {
             // Draw background in whole window
-            spriteBatch.Draw(Game1.mainMenuBG, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); 
+            spriteBatch.Draw(MainMenu.background, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); 
 
             // Iterate through every entry in menuOptionsStr arrray
             for (int i = 0; i < menuOptionsStr.Count(); i++)

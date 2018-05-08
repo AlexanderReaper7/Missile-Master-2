@@ -23,7 +23,7 @@ namespace Missile_Master_2
         /// <summary>
         /// Is selected key down?
         /// </summary>
-        private bool isKeyDown;
+        private bool on;
 
         /// <summary>
         /// Key ID
@@ -60,7 +60,7 @@ namespace Missile_Master_2
         /// </summary>
         public bool IsKeyDown
         {
-            get { return isKeyDown; }
+            get { return on; }
         }
 
         #endregion
@@ -102,11 +102,12 @@ namespace Missile_Master_2
             {
                 // Then set wasKeyUp to false and isKeyDown to true,
                 wasKeyUp = false;
-                isKeyDown = true;
+                on = true;
             }
             else
             {
-                isKeyDown = false;
+                // Else dont click
+                on = false;
             }
         }
 

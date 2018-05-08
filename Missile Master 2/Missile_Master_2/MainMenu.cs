@@ -21,7 +21,7 @@ namespace Missile_Master_2
         /// <summary>
         /// String array of menu option names
         /// </summary>
-        private static string[] menuOptionsStr = new string[] { "campaign", "Level Select", "Exit" };
+        private static string[] menuOptionsStr = new string[] { "Campaign", "Level Select", "Exit" };
 
         /// <summary>
         /// Vector2 array of menu option positions
@@ -33,7 +33,10 @@ namespace Missile_Master_2
         /// </summary>
         private static Vector2 selected;
 
-        private static Texture2D background;
+        /// <summary>
+        /// MainMenu background image
+        /// </summary>
+        public static Texture2D background;
 
         /// <summary>
         /// Controlls keyboard actions in menus
@@ -57,17 +60,19 @@ namespace Missile_Master_2
             {
                 switch ((int)selected.Y)
                 {
-                    case 0:
+                    // Campaign
+                    case 0: 
                         Console.WriteLine("Entering Campaign");
-                        // TODO : Add campaign as an in-between menu
-                        //Game1.gameState = Game1.Gamestates.Campaign;
-                        Game1.gameState = Game1.Gamestates.Ingame;
+                        Game1.gameState = Game1.Gamestates.Campaign;
                         break;
 
+                    // Level select
                     case 1:
+                        Console.WriteLine("Entering LevelSelect");
                         Game1.gameState = Game1.Gamestates.LevelSelect;
                         break;
-
+                    
+                    // Exit
                     case 2:
                         Game1.gameState = Game1.Gamestates.Exit;
                         break;
@@ -86,12 +91,15 @@ namespace Missile_Master_2
             // Iterate through every entry in menuOptionsStr arrray
             for (int i = 0; i < menuOptionsStr.Count(); i++)
             {
+                // If selected menu option is int i
                 if (selected.Y == i)
                 {
+                    // Then draw menu string in bold
                     spriteBatch.DrawString(Game1.pixelArt32Bold, menuOptionsStr[i], menuOptionsPos[i], Color.Black); 
                 }
                 else
                 {
+                    // Else draw menu string in regular
                     spriteBatch.DrawString(Game1.pixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black); 
                 }
             }

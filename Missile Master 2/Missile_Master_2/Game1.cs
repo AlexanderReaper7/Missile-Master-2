@@ -50,7 +50,10 @@ namespace Missile_Master_2
             Exit
         }
 
-        public static Gamestates gameState = Gamestates.MainMenu;
+        /// <summary>
+        /// Current gamestate
+        /// </summary>
+        public static Gamestates gameState = Gamestates.MainMenu; // TODO : Move GameState to seperate class called GameState
 
         public Game1()
         {
@@ -66,6 +69,7 @@ namespace Missile_Master_2
         /// </summary>
         protected override void Initialize()
         {
+            // Set window size to screenBounds
             graphics.PreferredBackBufferWidth = (int)screenBounds.X;
             graphics.PreferredBackBufferHeight = (int)screenBounds.Y;
             graphics.ApplyChanges();
@@ -82,7 +86,7 @@ namespace Missile_Master_2
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             MainMenu.LoadContent(Content);
-            InGame.Load(Content, GraphicsDevice);
+            InGame.LoadContent(Content, GraphicsDevice);
             pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
         }
@@ -120,11 +124,11 @@ namespace Missile_Master_2
                     break;
 
                 case Gamestates.Ingame:
-                    InGame.Update();
+                    InGame.Update(gameTime);
                     break;
 
                 case Gamestates.LevelSelect:
-
+                    LevelSelect.Update(gameTime);
                     break;
 
                 case Gamestates.Exit:
@@ -141,7 +145,9 @@ namespace Missile_Master_2
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            // Clear previous drawings, replacing it with a white background
             GraphicsDevice.Clear(Color.White);
+
             spriteBatch.Begin();
             switch (gameState)
             {
@@ -151,6 +157,10 @@ namespace Missile_Master_2
 
                 case Gamestates.Campaign:
                     Campaign.Draw(spriteBatch);
+                    break;
+
+                case Gamestates.Ingame:
+                    InGame.Draw(spriteBatch);
                     break;
 
                 case Gamestates.LevelSelect:
