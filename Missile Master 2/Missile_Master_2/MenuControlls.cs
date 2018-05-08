@@ -167,7 +167,7 @@ namespace Missile_Master_2
                     }
                 }
             }
-            // Return current selected
+            // Return updated selected
             return selected;
         }
     }

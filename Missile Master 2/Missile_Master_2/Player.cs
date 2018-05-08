@@ -51,8 +51,11 @@ namespace Missile_Master_2
 
         public void Update()
         {
+            // Get new direction
             direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
+
             rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
             // Run Player Controlls
             Controlls();

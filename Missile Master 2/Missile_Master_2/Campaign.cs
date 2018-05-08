@@ -30,9 +30,9 @@ namespace Missile_Master_2
         #region Static Methods
         public static void Update(GameTime gameTime)
         {
-            selected = menuControll.Update(); // Updates selected
+            selected = menuControll.Update(); // Update selected
 
-            // Change gamestate to the selected one on ENTER
+            // Change gamestate to the selected menu option upon ENTER
             if (menuControll.IsEnterDown)
             {
                 Console.WriteLine("ENTER");
@@ -54,19 +54,28 @@ namespace Missile_Master_2
             }
         }
 
+        /// <summary>
+        /// Draw Campaign menu
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public static void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.mainMenuBG, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); // Background
+            // Draw background in whole window
+            spriteBatch.Draw(Game1.mainMenuBG, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); 
 
+            // Iterate through every entry in menuOptionsStr arrray
             for (int i = 0; i < menuOptionsStr.Count(); i++)
             {
+                // If selected menu option is int i
                 if (selected.Y == i)
                 {
-                    spriteBatch.DrawString(Game1.pixelArt32Bold, menuOptionsStr[i], menuOptionsPos[i], Color.Black); // Selected menu option (Bold)
+                    // Then draw menu string in bold
+                    spriteBatch.DrawString(Game1.pixelArt32Bold, menuOptionsStr[i], menuOptionsPos[i], Color.Black);
                 }
                 else
                 {
-                    spriteBatch.DrawString(Game1.pixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black); // Not selected menu option (Normal)
+                    // Else draw menu string in regular
+                    spriteBatch.DrawString(Game1.pixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black);
                 }
             }
         }
