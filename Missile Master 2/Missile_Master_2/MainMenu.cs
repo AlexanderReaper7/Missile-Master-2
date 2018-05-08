@@ -81,17 +81,18 @@ namespace Missile_Master_2
         /// <param name="spriteBatch">Enables a group of sprites to be drawn using the same settings.</param>
         public static void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White); // Background
-
+            // Draw background in whole window
+            spriteBatch.Draw(background, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White);
+            // Iterate through every entry in menuOptionsStr arrray
             for (int i = 0; i < menuOptionsStr.Count(); i++)
             {
                 if (selected.Y == i)
                 {
-                    spriteBatch.DrawString(Game1.pixelArt32Bold, menuOptionsStr[i], menuOptionsPos[i], Color.Black); // Selected menu option (Bold)
+                    spriteBatch.DrawString(Game1.pixelArt32Bold, menuOptionsStr[i], menuOptionsPos[i], Color.Black); 
                 }
                 else
                 {
-                    spriteBatch.DrawString(Game1.pixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black); // Not selected menu option (Normal)
+                    spriteBatch.DrawString(Game1.pixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black); 
                 }
             }
         }
