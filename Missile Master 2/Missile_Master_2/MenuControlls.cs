@@ -1,174 +1,131 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 
 namespace Missile_Master_2
 {
     /// <summary>
-    /// An object used for easy controll in menues using the keyboard
+    ///     An object used for easy controll in menues using the keyboard
     /// </summary>
-    class MenuControlls
+    internal class MenuControlls
     {
-        #region Fields
-
         /// <summary>
-        /// Selected menu option
+        ///     Array of MenuKey, every key is checked in Update()
         /// </summary>
-        private Vector2 selected;
+        private readonly MenuKey[] _menuKeys = {new MenuKey(Keys.W), new MenuKey(Keys.A), new MenuKey(Keys.S), new MenuKey(Keys.D), new MenuKey(Keys.Up), new MenuKey(Keys.Left), new MenuKey(Keys.Down), new MenuKey(Keys.Right), new MenuKey(Keys.Enter), new MenuKey(Keys.Escape)};
 
         /// <summary>
-        /// Number of menu options
+        ///     Number of menu options
         /// </summary>
-        private Vector2 selectionMax;
+        private readonly Vector2 _selectionMax;
 
         /// <summary>
-        /// used in 
+        ///     Selected menu option
         /// </summary>
-        private bool isEnterDown;
-        private bool isEscapeDown;
-        /// <summary>
-        /// Array of MenuKey, every key is checked in Update() 
-        /// </summary>
-        MenuKey[] menuKeys = new MenuKey[] { new MenuKey(Keys.W), new MenuKey(Keys.A), new MenuKey(Keys.S), new MenuKey(Keys.D), new MenuKey(Keys.Up), new MenuKey(Keys.Left), new MenuKey(Keys.Down), new MenuKey(Keys.Right), new MenuKey(Keys.Enter), new MenuKey(Keys.Escape) };
+        private Vector2 _selected;
 
-        #endregion
-
-        #region Properties 
+        // TODO : Move gamestate changing to here
+        // TODO : Make MenuControlls static  
 
         /// <summary>
-        /// returns selected
-        /// </summary>
-        public Vector2 Selected
-        {
-            get { return selected; }
-        }
-
-        public bool IsEnterDown
-        {
-
-            get { return isEnterDown; }
-            set { isEnterDown = value; }
-
-        }
-
-        public bool IsEscapeDown
-        {
-
-            get { return isEscapeDown; }
-            set { isEscapeDown = value; }
-
-        }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Creates a new instance of MenuControlls
+        ///     Creates a new instance of MenuControlls
         /// </summary>
         /// <param name="selectionMax">Number of menu options</param>
         public MenuControlls(Vector2 selectionMax)
         {
-            this.selectionMax = selectionMax;
+            this._selectionMax = selectionMax;
         }
-
-        #endregion
 
 
         /// <summary>
-        /// 
+        ///     returns selected
+        /// </summary>
+        public Vector2 Selected => this._selected;
+
+        public bool IsEnterDown { get; private set; }
+
+        public bool IsEscapeDown { get; set; }
+
+        /// <summary>
+        ///     Updates selected menu option in menues
         /// </summary>
         /// <returns>New Vector2 position</returns>
         public Vector2 Update()
         {
             // For every MenuKey in the menuKeys array
-            foreach (MenuKey menukey in menuKeys)
+            foreach (MenuKey menukey in this._menuKeys)
             {
                 // Update the current MenuKey in menuKeys array
                 menukey.Update();
 
+                // TODO : Change these if statements to a switch
+
                 // When W or UP arrow keys are pressed
-                if ((menukey.Key == Keys.W || menukey.Key == Keys.Up) && menukey.IsKeyDown)
+                if (( menukey.Key == Keys.W || menukey.Key == Keys.Up ) && menukey.IsKeyDown)
                 {
                     // And selected.Y is GREATER THAN 0, preventing it from becoming negative,
-                    if (selected.Y > 0)
+                    if (this._selected.Y > 0)
                     {
                         // then subtract selected.Y by 1
-                        selected.Y--;
+                        this._selected.Y--;
                     }
                 }
 
                 // When A or Left arrow keys are pressed
-                if ((menukey.Key == Keys.A || menukey.Key == Keys.Left) && menukey.IsKeyDown)
+                if (( menukey.Key == Keys.A || menukey.Key == Keys.Left ) && menukey.IsKeyDown)
                 {
                     // And selected.X is GREATER THAN 0, preventing it from becoming negative
-                    if (selected.X > 0)
+                    if (this._selected.X > 0)
                     {
                         // Then subtract selected.X by 1
-                        selected.X--;
+                        this._selected.X--;
                     }
                 }
 
                 // When S or Down arrow keys are pressed
-                if ((menukey.Key == Keys.S || menukey.Key == Keys.Down) && menukey.IsKeyDown)
+                if (( menukey.Key == Keys.S || menukey.Key == Keys.Down ) && menukey.IsKeyDown)
                 {
                     // And selected.Y is LESS THAN selectionMax.Y, preventing it from exceeding maximum Y selection range,
-                    if (selected.Y < selectionMax.Y)
+                    if (this._selected.Y < this._selectionMax.Y)
                     {
                         // Then add selected.Y by 1
-                        selected.Y++;
+                        this._selected.Y++;
                     }
                 }
 
                 // When D or Right arrow keys are pressed
-                if ((menukey.Key == Keys.D || menukey.Key == Keys.Right) && menukey.IsKeyDown)
+                if (( menukey.Key == Keys.D || menukey.Key == Keys.Right ) && menukey.IsKeyDown)
                 {
                     // And selected.X is LESS THAN selectionMax.X, preventing it from exceeding maximum X selection range, 
-                    if (selected.X < selectionMax.X)
+                    if (this._selected.X < this._selectionMax.X)
                     {
                         // Then add selected.X by 1
-                        selected.X++;
+                        this._selected.X++;
                     }
                 }
 
-                // If current menukey is Enter
-                if (menukey.Key == Keys.Enter)
+                // Switch is used non-duplicated keys
+                switch (menukey.Key)
                 {
-                    // And it is pressed
-                    if (menukey.IsKeyDown)
-                    {
-                        // Then set isEnterDown to true
-                        isEnterDown = true;
-                    }
-                    else
-                    {
-                        // Else set isEnterDown to false
-                        isEnterDown = false;
-                    }
-                }
+                    // If current menukey is Enter
+                    case Keys.Enter:
 
-                // If current menukey is Escape
-                if (menukey.Key == Keys.Escape)
-                {
-                    // And it is pressed
-                    if (menukey.IsKeyDown)
-                    {
-                        // Then set isEscapeDown to true
-                        isEscapeDown = true;
-                    }
-                    else
-                    {
-                        // Else set isEnterDown to false
-                        isEscapeDown = false;
-                    }
+                        // And it is pressed
+                        IsEnterDown = menukey.IsKeyDown;
+
+                        break;
+
+                    // If current menukey is Escape
+                    case Keys.Escape:
+
+                        // And it is pressed
+                        IsEscapeDown = menukey.IsKeyDown;
+
+                        break;
                 }
             }
+
             // Return updated selected
-            return selected;
+            return this._selected;
         }
     }
 }

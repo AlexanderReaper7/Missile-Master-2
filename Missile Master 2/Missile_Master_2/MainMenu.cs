@@ -1,47 +1,43 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Missile_Master_2
 {
     /// <summary>
-    /// Draws and does logic for gamestate mainMenu
+    ///     Draws and does logic for gamestate mainMenu
     /// </summary>
-    static class MainMenu
+    internal static class MainMenu
     {
         // TODO : Add custom font
         // private static SpriteFont pixelArt32Normal = Game1.pixelArt32Normal;
 
         /// <summary>
-        /// String array of menu option names
+        ///     String array of menu option names
         /// </summary>
-        private static string[] menuOptionsStr = new string[] { "Campaign", "Level Select", "Exit" };
+        private static readonly string[] menuOptionsStr = {"Campaign", "Level Select", "Exit"};
 
         /// <summary>
-        /// Vector2 array of menu option positions
+        ///     Vector2 array of menu option positions
         /// </summary>
-        private static Vector2[] menuOptionsPos = { new Vector2(Game1.screenBounds.X / 8, 20), new Vector2(Game1.screenBounds.X / 8, 60), new Vector2(Game1.screenBounds.X / 8, 100), };
+        private static readonly Vector2[] menuOptionsPos = {new Vector2(Game1.ScreenBounds.X / 8, 20), new Vector2(Game1.ScreenBounds.X / 8, 60), new Vector2(Game1.ScreenBounds.X / 8, 100)};
 
         /// <summary>
-        /// selected menu option
+        ///     selected menu option
         /// </summary>
         private static Vector2 selected;
 
         /// <summary>
-        /// MainMenu background image
+        ///     MainMenu background image
         /// </summary>
         public static Texture2D background;
 
         /// <summary>
-        /// Controlls keyboard actions in menus
+        ///     Controlls keyboard actions in menus
         /// </summary>
-        private static MenuControlls menuControll = new MenuControlls(new Vector2(0, menuOptionsStr.Count() - 1));
+        private static readonly MenuControlls menuControll = new MenuControlls(new Vector2(0, menuOptionsStr.Count() - 1));
 
         public static void LoadContent(ContentManager content)
         {
@@ -49,19 +45,21 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        /// Updates MainMenu gamestate logic
+        ///     Updates MainMenu gamestate logic
         /// </summary>
         /// <param name="gameTime"></param>
         public static void Update(GameTime gameTime)
         {
             selected = menuControll.Update(); // Updates selected menu option
-            // Change gamestate to the selected one on ENTER
+
+            // If enter is pressed
             if (menuControll.IsEnterDown)
             {
-                switch ((int)selected.Y)
+                // then switch gamestate
+                switch ((int) selected.Y)
                 {
                     // Campaign
-                    case 0: 
+                    case 0:
                         Console.WriteLine("Entering Campaign");
                         Game1.gameState = Game1.Gamestates.Campaign;
                         break;
@@ -71,7 +69,7 @@ namespace Missile_Master_2
                         Console.WriteLine("Entering LevelSelect");
                         Game1.gameState = Game1.Gamestates.LevelSelect;
                         break;
-                    
+
                     // Exit
                     case 2:
                         Game1.gameState = Game1.Gamestates.Exit;
@@ -81,27 +79,19 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        /// Draws the MainMenu gamestate
+        ///     Draws the MainMenu gamestate
         /// </summary>
         /// <param name="spriteBatch">Enables a group of sprites to be drawn using the same settings.</param>
         public static void Draw(SpriteBatch spriteBatch)
         {
             // Draw background in whole window
-            spriteBatch.Draw(background, new Rectangle(0, 0, (int)Game1.screenBounds.X, (int)Game1.screenBounds.Y), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0, 0, (int) Game1.ScreenBounds.X, (int) Game1.ScreenBounds.Y), Color.White);
+
             // Iterate through every entry in menuOptionsStr arrray
-            for (int i = 0; i < menuOptionsStr.Count(); i++)
+            for (int i = 0; i < menuOptionsStr.Length; i++)
             {
                 // If selected menu option is int i
-                if (selected.Y == i)
-                {
-                    // Then draw menu string in bold
-                    spriteBatch.DrawString(Game1.pixelArt32Bold, menuOptionsStr[i], menuOptionsPos[i], Color.Black); 
-                }
-                else
-                {
-                    // Else draw menu string in regular
-                    spriteBatch.DrawString(Game1.pixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black); 
-                }
+                spriteBatch.DrawString(selected.Y == i ? Game1.PixelArt32Bold : Game1.PixelArt32Normal, menuOptionsStr[i], menuOptionsPos[i], Color.Black);
             }
         }
     }

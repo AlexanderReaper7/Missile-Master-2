@@ -1,20 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Missile_Master_2
 {
-    static class InGame
+    internal static class InGame
     {
         #region Fields
 
-        static public Player player = new Player();
-        static MenuKey esc = new MenuKey(Keys.Escape);
+        private static Player _player = new Player();
+        private static readonly MenuKey esc = new MenuKey(Keys.Escape); // TODO : remove me when I become redundant
+        private static MovableBackground _movableBackground;
         #endregion
 
         #region Static Methods
@@ -22,13 +19,15 @@ namespace Missile_Master_2
         public static void LoadContent(ContentManager content, GraphicsDevice graphics)
         {
             // Load player
-            player.LoadContent(content, graphics);
+            _player.LoadContent(content, graphics);
+            // _movableBackground = new MovableBackground(); TODO : Add Level Texture
         }
 
         public static void Update(GameTime gameTime)
         {
             // Update Escape key
             esc.Update();
+
             // If Esc is down
             if (esc.IsKeyDown)
             {
@@ -37,13 +36,13 @@ namespace Missile_Master_2
             }
 
             // Update player
-            player.Update(gameTime);
+            _player.Update(gameTime);
         }
 
         public static void Draw(SpriteBatch spriteBatch)
         {
             // Draw player
-            player.Draw(spriteBatch);
+            _player.Draw(spriteBatch);
         }
 
         #endregion

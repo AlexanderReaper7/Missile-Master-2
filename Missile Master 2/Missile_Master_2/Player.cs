@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,113 +6,120 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Missile_Master_2
 {
-    class Player
+    internal class Player
     {
-        #region Fields
-
-        private GraphicsDevice graphics;
-        public Texture2D texture;
-        public Vector2 velocity; // TODO : Make air-resistance and more fluid movement
-        public float acceleration;
-        public Vector2 origin;
-        public Vector2 direction;
-        /// <summary>
-        /// Rotation of player in radians
-        /// </summary>
-        private float rotationRate = MathHelper.Pi / 128f;
-
-        private KeyboardState keyboard;
-
-        private CollidableObject collidableObject;
-
-        #endregion
-
+        private double _timer;
 
 
         /// <summary>
-        /// Called upon to load player textures etc.
+        ///     Called upon to load player textures etc.
         /// </summary>
         /// <param name="content"></param>
         /// <param name="graphics"></param>
         public void LoadContent(ContentManager content, GraphicsDevice graphics)
         {
-            texture = content.Load<Texture2D>(@"images/V-2");
-            this.graphics = graphics;
+            this.Texture = content.Load<Texture2D>(@"images/V-2");
+            this._graphics = graphics;
 
-            origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            this.Origin = new Vector2(this.Texture.Width / 2, this.Texture.Height / 2);
 
-            collidableObject = new CollidableObject(texture, new Vector2(100, 200), 0.0f);
+            this._collidableObject = new CollidableObject(this.Texture, new Vector2(100, 200), 0.0f);
+
             // Logging statement
             Console.WriteLine("Player Loaded");
         }
 
-        double timer = 0;
         public void Update(GameTime gameTime)
         {
             // Get new direction
-            direction = new Vector2((float)Math.Cos(collidableObject.Rotation), (float)Math.Sin(collidableObject.Rotation));
+            this.Direction = new Vector2((float) Math.Cos(this._collidableObject.Rotation), (float) Math.Sin(this._collidableObject.Rotation));
 
-            timer += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (timer > 250)
+            this._timer += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (this._timer > 250)
             {
-                timer = 0;
+                this._timer = 0;
 
-                Console.WriteLine("direction" + direction.ToString());
-                Console.WriteLine("rotation" + collidableObject.Rotation.ToString());
-                Console.WriteLine("acceleration" + acceleration.ToString());
-                Console.WriteLine("position" + collidableObject.Position.ToString());
+                Console.WriteLine("direction" + this.Direction);
+                Console.WriteLine("rotation" + this._collidableObject.Rotation);
+                Console.WriteLine("acceleration" + this.Acceleration);
+                Console.WriteLine("position" + this._collidableObject.Position);
             }
 
             // Run Player Controlls
             Controlls();
-            velocity += direction * acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.Velocity += this.Direction * this.Acceleration * (float) gameTime.ElapsedGameTime.TotalSeconds;
+
             // Update position
-            collidableObject.Position += velocity;
+            this._collidableObject.Position += this.Velocity;
+
             // Slowdown
-            acceleration *= 0.90f;
-            velocity *= 0.9f;
-            if (acceleration < 0.2)
+            this.Acceleration *= 0.90f;
+            this.Velocity *= 0.9f;
+
+            if (this.Acceleration < 0.2)
             {
-                acceleration = 0;
+                this.Acceleration = 0;
             }
         }
 
 
         /// <summary>
-        /// keyboard controlls for ingame
+        ///     keyboard controlls for ingame
         /// </summary>
         private void Controlls()
         {
             // Get keyboard
-            keyboard = Keyboard.GetState();
+            this._keyboard = Keyboard.GetState();
 
-            if (keyboard.IsKeyDown(Keys.W) || keyboard.IsKeyDown(Keys.Up))
+            if (this._keyboard.IsKeyDown(Keys.W) || this._keyboard.IsKeyDown(Keys.Up))
             {
-                acceleration++;
+                this.Acceleration++;
+
                 // TODO : Add fuel usage
             }
 
-            if (keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.Left))
+            if (this._keyboard.IsKeyDown(Keys.A) || this._keyboard.IsKeyDown(Keys.Left))
             {
-                collidableObject.Rotation -= rotationRate;
+                this._collidableObject.Rotation -= this.rotationRate;
             }
 
-            if (keyboard.IsKeyDown(Keys.S) || keyboard.IsKeyDown(Keys.Down))
+            if (this._keyboard.IsKeyDown(Keys.S) || this._keyboard.IsKeyDown(Keys.Down))
             {
                 // Brake
-                acceleration *= 0.6f;
+                this.Acceleration *= 0.6f;
             }
 
-            if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
+            if (this._keyboard.IsKeyDown(Keys.D) || this._keyboard.IsKeyDown(Keys.Right))
             {
-                collidableObject.Rotation += rotationRate;
+                this._collidableObject.Rotation += this.rotationRate;
             }
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, collidableObject.Position, null, Color.White, collidableObject.Rotation, origin, 1.0f, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(this.Texture, this._collidableObject.Position, null, Color.White, this._collidableObject.Rotation, this.Origin, 1.0f, SpriteEffects.None, 0.0f);
         }
+
+        #region Fields
+
+        private GraphicsDevice _graphics;
+        public Texture2D Texture;
+        public Vector2 Velocity; // TODO : Make air-resistance and more fluid movement
+        public float Acceleration;
+        public Vector2 Origin;
+        public Vector2 Direction;
+
+        /// <summary>
+        ///     Rotation of player in radians
+        /// </summary>
+        private readonly float rotationRate = MathHelper.Pi / 128f; // TODO : Add upgrade levels to rotationRate
+
+        private KeyboardState _keyboard;
+
+        private CollidableObject _collidableObject;
+
+        #endregion
     }
 }

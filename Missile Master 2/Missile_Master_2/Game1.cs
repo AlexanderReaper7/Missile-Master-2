@@ -12,31 +12,31 @@ namespace Missile_Master_2
         /// <summary>
         /// Main GraphicsDeviceManager
         /// </summary>
-        private GraphicsDeviceManager graphics;
+        private readonly GraphicsDeviceManager _graphics;
 
         /// <summary>
         /// Main spriteBatch
         /// </summary>
-        private SpriteBatch spriteBatch;
+        private SpriteBatch _spriteBatch;
 
         /// <summary>
         /// Size of game window
         /// </summary>
-        public static Vector2 screenBounds = new Vector2(1280, 720);
+        public static Vector2 ScreenBounds = new Vector2(1280, 720);
 
         /// <summary>
-        /// Normal pixel-art SpriteFont in size 32pt
+        /// Normal style pixel-art SpriteFont in size 32pt
         /// </summary>
-        public static SpriteFont pixelArt32Normal;
+        public static SpriteFont PixelArt32Normal;
 
         /// <summary>
-        /// Bold pixel-art SpriteFont in size 32pt
+        /// Bold style pixel-art SpriteFont in size 32pt
         /// </summary>
-        public static SpriteFont pixelArt32Bold;
+        public static SpriteFont PixelArt32Bold;
         /// <summary>
         /// Menu background
         /// </summary>
-        public static Texture2D mainMenuBG;
+        public static Texture2D MainMenuBg;
 
         /// <summary>
         /// List of states for the game
@@ -57,22 +57,21 @@ namespace Missile_Master_2
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            this._graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
+        /// This is where it can query for any required services and load any non-graphic related content.
+        /// Calling base.Initialize will enumerate through any components and initialize them as well.
         /// </summary>
         protected override void Initialize()
         {
             // Set window size to screenBounds
-            graphics.PreferredBackBufferWidth = (int)screenBounds.X;
-            graphics.PreferredBackBufferHeight = (int)screenBounds.Y;
-            graphics.ApplyChanges();
+            this._graphics.PreferredBackBufferWidth = (int)ScreenBounds.X;
+            this._graphics.PreferredBackBufferHeight = (int)ScreenBounds.Y;
+            this._graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -84,11 +83,11 @@ namespace Missile_Master_2
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this._spriteBatch = new SpriteBatch(GraphicsDevice);
             MainMenu.LoadContent(Content);
             InGame.LoadContent(Content, GraphicsDevice);
-            pixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
-            pixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
+            PixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
+            PixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
         }
 
         /// <summary>
@@ -148,19 +147,19 @@ namespace Missile_Master_2
             // Clear previous drawings, replacing it with a white background
             GraphicsDevice.Clear(Color.White);
 
-            spriteBatch.Begin();
+            this._spriteBatch.Begin();
             switch (gameState)
             {
                 case Gamestates.MainMenu:
-                    MainMenu.Draw(spriteBatch);
+                    MainMenu.Draw(this._spriteBatch);
                     break;
 
                 case Gamestates.Campaign:
-                    Campaign.Draw(spriteBatch);
+                    Campaign.Draw(this._spriteBatch);
                     break;
 
                 case Gamestates.Ingame:
-                    InGame.Draw(spriteBatch);
+                    InGame.Draw(this._spriteBatch);
                     break;
 
                 case Gamestates.LevelSelect:
@@ -171,7 +170,7 @@ namespace Missile_Master_2
                     this.Exit();
                     break;
             }
-            spriteBatch.End();
+            this._spriteBatch.End();
             base.Draw(gameTime);
         }
     }

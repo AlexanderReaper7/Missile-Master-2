@@ -1,103 +1,79 @@
 ﻿using System;
-using Microsoft.Xna;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Missile_Master_2
 {
     /// <summary>
-    /// An object that can be used to depict a sprite in world space which can detect pixel level collisions with other CollidableObjects
+    ///     An object that can be used to depict a sprite in world space which can detect pixel level collisions with other
+    ///     CollidableObjects
     /// </summary>
     public class CollidableObject
     {
         #region Fields
 
-        private Texture2D texture;
-        private Vector2 position;
-        private float rotation;
-        private Vector2 origin;
-        private Color[] textureData;
+        private Vector2 _position;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// The current position of the object in world space
+        ///     The current position of the object in world space
         /// </summary>
         public Vector2 Position
         {
-            get { return this.position; }
-            set { position = value; }
-        }
-
-        /// <summary>
-        /// The currently loaded texture
-        /// </summary>
-        public Texture2D Texture
-        {
-            get { return this.texture; }
-        }
-
-        /// <summary>
-        /// The pixel data of the loaded texture
-        /// </summary>
-        public Color[] TextureData
-        {
-            get { return this.textureData; }
-        }
-
-        /// <summary>
-        /// The rotation factor
-        /// </summary>
-        public float Rotation
-        {
-            get { return this.rotation; }
-            set { this.rotation = value; }
-        }
-
-        /// <summary>
-        /// The origin of the object, by default this is the center point of the texture.
-        /// </summary>
-        public Vector2 Origin
-        {
-            get { return this.origin; }
-            set { this.origin = value; }
-        }
-
-        /// <summary>
-        /// A Rectangle that holds the width and height of the texture and zero in the X and Y points.
-        /// </summary>
-        public Rectangle Rect
-        {
-            get { return new Rectangle(0, 0, this.Texture.Width, this.Texture.Height); }
-        }
-
-        /// <summary>
-        /// A Matrix based on the current rotation and position.
-        /// </summary>
-        public Matrix Transform
-        {
             get
             {
-                return Matrix.CreateTranslation(new Vector3(-this.Origin, 0.0f)) * Matrix.CreateRotationZ(this.Rotation) * Matrix.CreateTranslation(new Vector3(this.Position, 0.0f));
+                return this._position;
+            }
+            set
+            {
+                this._position = value;
             }
         }
 
         /// <summary>
-        /// An axis aligned rectangle which fully contains an arbitrarily transformed axis aligned rectangle.
+        ///     The currently loaded texture
         /// </summary>
-        public Rectangle BoundingRectangle
-        {
-            get { return CalculateBoundingRectangle(this.Rect, this.Transform); }
-        }
+        public Texture2D Texture { get; private set; }
+
+        /// <summary>
+        ///     The pixel data of the loaded texture
+        /// </summary>
+        public Color[] TextureData { get; private set; }
+
+        /// <summary>
+        ///     The rotation factor
+        /// </summary>
+        public float Rotation { get; set; }
+
+        /// <summary>
+        ///     The origin of the object, by default this is the center point of the texture.
+        /// </summary>
+        public Vector2 Origin { get; set; }
+
+        /// <summary>
+        ///     A Rectangle that holds the width and height of the texture and zero in the X and Y points.
+        /// </summary>
+        public Rectangle Rect => new Rectangle(0, 0, Texture.Width, Texture.Height);
+
+        /// <summary>
+        ///     A Matrix based on the current rotation and position.
+        /// </summary>
+        public Matrix Transform => Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) * Matrix.CreateRotationZ(Rotation) * Matrix.CreateTranslation(new Vector3(Position, 0.0f));
+
+        /// <summary>
+        ///     An axis aligned rectangle which fully contains an arbitrarily transformed axis aligned rectangle.
+        /// </summary>
+        public Rectangle BoundingRectangle => CalculateBoundingRectangle(Rect, Transform);
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Construct a new CollidableObject with a default texture and position in world space.
+        ///     Construct a new CollidableObject with a default texture and position in world space.
         /// </summary>
         /// <param name="texture">The texture associated with the object</param>
         /// <param name="position">The position of the object in world space</param>
@@ -106,16 +82,16 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        /// Constructs a new CollidableObject with a default texture, position and rotation in world space.
+        ///     Constructs a new CollidableObject with a default texture, position and rotation in world space.
         /// </summary>
         /// <param name="texture">The texture associated with the object</param>
         /// <param name="position">The position of the object in world space</param>
         /// <param name="rotation">The rotation factor</param>
         public CollidableObject(Texture2D texture, Vector2 position, float rotation)
         {
-            this.LoadTexture(texture);
-            this.position = position;
-            this.rotation = rotation;
+            LoadTexture(texture);
+            this._position = position;
+            Rotation = rotation;
         }
 
         #endregion
@@ -123,59 +99,24 @@ namespace Missile_Master_2
         #region Instance Methods
 
         /// <summary>
-        /// Moves the object left by the value passed in moveBy.
-        /// </summary>
-        /// <param name="moveBy">The floating point factor to move the object by</param>
-        public void MoveLeft(float moveBy)
-        {
-            this.position.X -= moveBy;
-        }
-
-        /// <summary>
-        /// Moves the object right by the value passed in moveBy.
-        /// </summary>
-        /// <param name="moveBy">The floating point factor to move the object by</param>
-        public void MoveRight(float moveBy)
-        {
-            this.position.X += moveBy;
-        }
-
-        /// <summary>
-        /// Moves the object up by the value passed in moveBy.
-        /// </summary>
-        /// <param name="moveBy">The floating point factor to move the object by</param>
-        public void MoveUp(float moveBy)
-        {
-            this.position.Y -= moveBy;
-        }
-
-        /// <summary>
-        /// Moves the object down by the value passed in moveBy.
-        /// </summary>
-        /// <param name="moveBy">The floating point factor to move the object by</param>
-        public void MoveDown(float moveBy)
-        {
-            this.position.Y += moveBy;
-        }
-
-        /// <summary>
-        /// Rotates the object by the value passed in moveBy, which can be both positive or negative to rotate in different directions.
+        ///     Rotates the object by the value passed in moveBy, which can be both positive or negative to rotate in different
+        ///     directions.
         /// </summary>
         /// <param name="rotateBy">The floating point factor to move the object by</param>
         public void Rotate(float rotateBy)
         {
             if (rotateBy < 0)
             {
-                this.rotation -= rotateBy;
+                Rotation -= rotateBy;
             }
             else
             {
-                this.rotation += rotateBy;
+                Rotation += rotateBy;
             }
         }
 
         /// <summary>
-        /// Detects a pixel level collision between two CollidableObjects.
+        ///     Detects a pixel level collision between two CollidableObjects.
         /// </summary>
         /// <param name="collidable">The CollidableObject to check a collision against</param>
         /// <returns>True if colliding, false if not.</returns>
@@ -183,9 +124,9 @@ namespace Missile_Master_2
         {
             bool retval = false;
 
-            if (this.BoundingRectangle.Intersects(collidable.BoundingRectangle))
+            if (BoundingRectangle.Intersects(collidable.BoundingRectangle))
             {
-                if (IntersectPixels(this.Transform, this.Texture.Width, this.Texture.Height, this.TextureData, collidable.Transform, collidable.Texture.Width, collidable.Texture.Height, collidable.TextureData))
+                if (IntersectPixels(Transform, Texture.Width, Texture.Height, TextureData, collidable.Transform, collidable.Texture.Width, collidable.Texture.Height, collidable.TextureData))
                 {
                     retval = true;
                 }
@@ -195,37 +136,38 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        /// Loads a new texture and resets the origin to be the center point of the texture, the previous transformation values will be maintained.
+        ///     Loads a new texture and resets the origin to be the center point of the texture, the previous transformation values
+        ///     will be maintained.
         /// </summary>
         /// <param name="texture">The new texture to load</param>
         public void LoadTexture(Texture2D texture)
         {
-            this.texture = texture;
-            this.origin = new Vector2(texture.Width / 2, texture.Height / 2);
-            this.textureData = new Color[texture.Width * texture.Height];
-            this.texture.GetData(this.textureData);
+            Texture = texture;
+            Origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            TextureData = new Color[texture.Width * texture.Height];
+            Texture.GetData(TextureData);
         }
 
         /// <summary>
-        /// Loads a new texture and origin, the previous transformation values will be maintained.
+        ///     Loads a new texture and origin, the previous transformation values will be maintained.
         /// </summary>
         /// <param name="texture">The new texture to load</param>
         /// <param name="origin">The new origin point</param>
         public void LoadTexture(Texture2D texture, Vector2 origin)
         {
-            this.LoadTexture(texture);
-            this.origin = origin;
+            LoadTexture(texture);
+            Origin = origin;
         }
 
         /// <summary>
-        /// Unofficial method for moving and rotating object
+        ///     Unofficial method for moving and rotating object
         /// </summary>
         /// <param name="position"></param>
         /// <param name="rotation"></param>
         public void Update(Vector2 position, float rotation)
         {
-            this.position = position;
-            this.rotation = rotation;
+            this._position = position;
+            Rotation = rotation;
         }
 
         #endregion
@@ -233,8 +175,8 @@ namespace Missile_Master_2
         #region Static Methods
 
         /// <summary>
-        /// Determines if there is overlap of the non-transparent pixels
-        /// between two sprites.
+        ///     Determines if there is overlap of the non-transparent pixels
+        ///     between two sprites.
         /// </summary>
         /// <param name="rectangleA">Bounding rectangle of the first sprite</param>
         /// <param name="dataA">Pixel data of the first sprite</param>
@@ -255,8 +197,8 @@ namespace Missile_Master_2
                 for (int x = left; x < right; x++)
                 {
                     // Get the color of both pixels at this point
-                    Color colorA = dataA[(x - rectangleA.Left) + (y - rectangleA.Top) * rectangleA.Width];
-                    Color colorB = dataB[(x - rectangleB.Left) + (y - rectangleB.Top) * rectangleB.Width];
+                    Color colorA = dataA[x - rectangleA.Left + ( y - rectangleA.Top ) * rectangleA.Width];
+                    Color colorB = dataB[x - rectangleB.Left + ( y - rectangleB.Top ) * rectangleB.Width];
 
                     // If both pixels are not completely transparent,
                     if (colorA.A != 0 && colorB.A != 0)
@@ -272,8 +214,8 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        /// Determines if there is overlap of the non-transparent pixels between two
-        /// sprites.
+        ///     Determines if there is overlap of the non-transparent pixels between two
+        ///     sprites.
         /// </summary>
         /// <param name="transformA">World transform of the first sprite.</param>
         /// <param name="widthA">Width of the first sprite's texture.</param>
@@ -311,12 +253,11 @@ namespace Missile_Master_2
                 for (int xA = 0; xA < widthA; xA++)
                 {
                     // Round to the nearest pixel
-                    int xB = (int)Math.Round(posInB.X);
-                    int yB = (int)Math.Round(posInB.Y);
+                    int xB = (int) Math.Round(posInB.X);
+                    int yB = (int) Math.Round(posInB.Y);
 
                     // If the pixel lies within the bounds of B
-                    if (0 <= xB && xB < widthB &&
-                        0 <= yB && yB < heightB)
+                    if (0 <= xB && xB < widthB && 0 <= yB && yB < heightB)
                     {
                         // Get the colors of the overlapping pixels
                         Color colorA = dataA[xA + yA * widthA];
@@ -343,8 +284,8 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        /// Calculates an axis aligned rectangle which fully contains an arbitrarily
-        /// transformed axis aligned rectangle.
+        ///     Calculates an axis aligned rectangle which fully contains an arbitrarily
+        ///     transformed axis aligned rectangle.
         /// </summary>
         /// <param name="rectangle">Original bounding rectangle.</param>
         /// <param name="transform">World transform of the rectangle.</param>
@@ -364,14 +305,11 @@ namespace Missile_Master_2
             Vector2.Transform(ref rightBottom, ref transform, out rightBottom);
 
             // Find the minimum and maximum extents of the rectangle in world space
-            Vector2 min = Vector2.Min(Vector2.Min(leftTop, rightTop),
-                                      Vector2.Min(leftBottom, rightBottom));
-            Vector2 max = Vector2.Max(Vector2.Max(leftTop, rightTop),
-                                      Vector2.Max(leftBottom, rightBottom));
+            Vector2 min = Vector2.Min(Vector2.Min(leftTop, rightTop), Vector2.Min(leftBottom, rightBottom));
+            Vector2 max = Vector2.Max(Vector2.Max(leftTop, rightTop), Vector2.Max(leftBottom, rightBottom));
 
             // Return that as a rectangle
-            return new Rectangle((int)min.X, (int)min.Y,
-                                 (int)(max.X - min.X), (int)(max.Y - min.Y));
+            return new Rectangle((int) min.X, (int) min.Y, (int) ( max.X - min.X ), (int) ( max.Y - min.Y ));
         }
 
         #endregion
