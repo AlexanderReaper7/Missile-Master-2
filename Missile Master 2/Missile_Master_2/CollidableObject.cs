@@ -10,28 +10,33 @@ namespace Missile_Master_2
     /// </summary>
     public class CollidableObject
     {
-        #region Fields
-
-        private Vector2 _position;
-
-        #endregion
-
-        #region Properties
-
         /// <summary>
         ///     The current position of the object in world space
         /// </summary>
-        public Vector2 Position
+        public Vector2 Position;
+
+        /// <summary>
+        ///     Construct a new CollidableObject with a default texture and position in world space.
+        /// </summary>
+        /// <param name="texture">The texture associated with the object</param>
+        /// <param name="position">The position of the object in world space</param>
+        public CollidableObject(Texture2D texture, Vector2 position) : this(texture, position, 0.0f)
         {
-            get
-            {
-                return this._position;
-            }
-            set
-            {
-                this._position = value;
-            }
         }
+
+        /// <summary>
+        ///     Constructs a new CollidableObject with a default texture, position and rotation in world space.
+        /// </summary>
+        /// <param name="texture">The texture associated with the object</param>
+        /// <param name="position">The position of the object in world space</param>
+        /// <param name="rotation">The rotation factor</param>
+        public CollidableObject(Texture2D texture, Vector2 position, float rotation)
+        {
+            LoadTexture(texture);
+            Position = position;
+            Rotation = rotation;
+        }
+
 
         /// <summary>
         ///     The currently loaded texture
@@ -68,36 +73,6 @@ namespace Missile_Master_2
         /// </summary>
         public Rectangle BoundingRectangle => CalculateBoundingRectangle(Rect, Transform);
 
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        ///     Construct a new CollidableObject with a default texture and position in world space.
-        /// </summary>
-        /// <param name="texture">The texture associated with the object</param>
-        /// <param name="position">The position of the object in world space</param>
-        public CollidableObject(Texture2D texture, Vector2 position) : this(texture, position, 0.0f)
-        {
-        }
-
-        /// <summary>
-        ///     Constructs a new CollidableObject with a default texture, position and rotation in world space.
-        /// </summary>
-        /// <param name="texture">The texture associated with the object</param>
-        /// <param name="position">The position of the object in world space</param>
-        /// <param name="rotation">The rotation factor</param>
-        public CollidableObject(Texture2D texture, Vector2 position, float rotation)
-        {
-            LoadTexture(texture);
-            this._position = position;
-            Rotation = rotation;
-        }
-
-        #endregion
-
-        #region Instance Methods
-
         /// <summary>
         ///     Rotates the object by the value passed in moveBy, which can be both positive or negative to rotate in different
         ///     directions.
@@ -122,17 +97,18 @@ namespace Missile_Master_2
         /// <returns>True if colliding, false if not.</returns>
         public bool IsColliding(CollidableObject collidable)
         {
-            bool retval = false;
-
+            // If rectangle of objects intersects
             if (BoundingRectangle.Intersects(collidable.BoundingRectangle))
             {
+                // And any of the pixels of objects intersect
                 if (IntersectPixels(Transform, Texture.Width, Texture.Height, TextureData, collidable.Transform, collidable.Texture.Width, collidable.Texture.Height, collidable.TextureData))
                 {
-                    retval = true;
+                    // Then return true
+                    return true;
                 }
             }
-
-            return retval;
+            // Else return false 
+            return false;
         }
 
         /// <summary>
@@ -166,13 +142,9 @@ namespace Missile_Master_2
         /// <param name="rotation"></param>
         public void Update(Vector2 position, float rotation)
         {
-            this._position = position;
+            Position = position;
             Rotation = rotation;
         }
-
-        #endregion
-
-        #region Static Methods
 
         /// <summary>
         ///     Determines if there is overlap of the non-transparent pixels
@@ -230,18 +202,18 @@ namespace Missile_Master_2
         {
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
-            Matrix transformAToB = transformA * Matrix.Invert(transformB);
+            Matrix transformAtoB = transformA * Matrix.Invert(transformB);
 
             // When a point moves in A's local space, it moves in B's local space with a
             // fixed direction and distance proportional to the movement in A.
             // This algorithm steps through A one pixel at a time along A's X and Y axes
             // Calculate the analogous steps in B:
-            Vector2 stepX = Vector2.TransformNormal(Vector2.UnitX, transformAToB);
-            Vector2 stepY = Vector2.TransformNormal(Vector2.UnitY, transformAToB);
+            Vector2 stepX = Vector2.TransformNormal(Vector2.UnitX, transformAtoB);
+            Vector2 stepY = Vector2.TransformNormal(Vector2.UnitY, transformAtoB);
 
             // Calculate the top left corner of A in B's local space
             // This variable will be reused to keep track of the start of each row
-            Vector2 yPosInB = Vector2.Transform(Vector2.Zero, transformAToB);
+            Vector2 yPosInB = Vector2.Transform(Vector2.Zero, transformAtoB);
 
             // For each row of pixels in A
             for (int yA = 0; yA < heightA; yA++)
@@ -311,7 +283,5 @@ namespace Missile_Master_2
             // Return that as a rectangle
             return new Rectangle((int) min.X, (int) min.Y, (int) ( max.X - min.X ), (int) ( max.Y - min.Y ));
         }
-
-        #endregion
     }
 }

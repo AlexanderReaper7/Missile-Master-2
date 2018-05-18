@@ -22,7 +22,7 @@ namespace Missile_Master_2
         private static readonly Vector2[] MenuOptionsPos = {new Vector2(Game1.ScreenBounds.X / 8, 20), new Vector2(Game1.ScreenBounds.X / 8, 60), new Vector2(Game1.ScreenBounds.X / 8, 100)};
 
         private static Vector2 _selected;
-        private static readonly MenuControlls MenuControll = new MenuControlls(new Vector2(0, MenuOptionsStr.Count() - 1));
+        private static readonly MenuControls MenuControl = new MenuControls(new Vector2(0, MenuOptionsStr.Count() - 1));
 
         #endregion
 
@@ -30,15 +30,15 @@ namespace Missile_Master_2
 
         public static void Update(GameTime gameTime)
         {
-            _selected = MenuControll.Update(); // Update selected
+            _selected = MenuControl.Update(); // Update selected
 
             // Change gamestate to the selected menu option upon ENTER
-            if (MenuControll.IsEnterDown)
+            if (MenuControl.IsEnterDown)
             {
                 switch ((int) _selected.Y)
                 {
                     case 0: // Continue
-                        Game1.gameState = Game1.Gamestates.Ingame;
+                        Game1.GameState = Game1.Gamestates.InGame;
                         break;
 
                     case 1: // New Campaign
@@ -46,7 +46,7 @@ namespace Missile_Master_2
                         break;
 
                     case 2: // Back
-                        Game1.gameState = Game1.Gamestates.MainMenu;
+                        Game1.GameState = Game1.Gamestates.MainMenu;
                         break;
                 }
             }
@@ -59,7 +59,7 @@ namespace Missile_Master_2
         public static void Draw(SpriteBatch spriteBatch)
         {
             // Draw background in whole window
-            spriteBatch.Draw(MainMenu.background, new Rectangle(0, 0, (int) Game1.ScreenBounds.X, (int) Game1.ScreenBounds.Y), Color.White);
+            spriteBatch.Draw(MainMenu.Background, new Rectangle(0, 0, (int) Game1.ScreenBounds.X, (int) Game1.ScreenBounds.Y), Color.White);
 
             // Iterate through every entry in menuOptionsStr arrray
             for (int i = 0; i < MenuOptionsStr.Count(); i++)

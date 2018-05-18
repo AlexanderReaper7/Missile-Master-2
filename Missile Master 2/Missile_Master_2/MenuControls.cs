@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Input;
 namespace Missile_Master_2
 {
     /// <summary>
-    ///     An object used for easy controll in menues using the keyboard
+    ///     An object used for easy control in menus using the keyboard
     /// </summary>
-    internal class MenuControlls
+    internal class MenuControls
     {
         /// <summary>
         ///     Array of MenuKey, every key is checked in Update()
@@ -24,13 +24,13 @@ namespace Missile_Master_2
         private Vector2 _selected;
 
         // TODO : Move gamestate changing to here
-        // TODO : Make MenuControlls static  
+        // TODO : Make MenuControls static  
 
         /// <summary>
-        ///     Creates a new instance of MenuControlls
+        ///     Creates a new instance of MenuControls
         /// </summary>
         /// <param name="selectionMax">Number of menu options</param>
-        public MenuControlls(Vector2 selectionMax)
+        public MenuControls(Vector2 selectionMax)
         {
             this._selectionMax = selectionMax;
         }
@@ -46,7 +46,7 @@ namespace Missile_Master_2
         public bool IsEscapeDown { get; set; }
 
         /// <summary>
-        ///     Updates selected menu option in menues
+        ///     Updates selected menu option in menus
         /// </summary>
         /// <returns>New Vector2 position</returns>
         public Vector2 Update()

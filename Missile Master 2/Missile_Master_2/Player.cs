@@ -6,9 +6,24 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Missile_Master_2
 {
+    /// <summary>
+    /// Class responsible for Player movement, drawing etc.
+    /// </summary>
     internal class Player
     {
-        private double _timer;
+        /// <summary>
+        ///     Rotation of player in radians
+        /// </summary>
+        private readonly float rotationRate = MathHelper.Pi / 128f; // TODO : Add upgrade levels to rotationRate
+
+        private GraphicsDevice _graphics;
+
+        private KeyboardState _keyboard;
+        public float Acceleration;
+
+        public CollidableObject CollidableObject;
+        public Vector2 Direction;
+        public Vector2 Velocity; // TODO : Make air-resistance and more fluid movement
 
 
         /// <summary>
@@ -18,12 +33,8 @@ namespace Missile_Master_2
         /// <param name="graphics"></param>
         public void LoadContent(ContentManager content, GraphicsDevice graphics)
         {
-            this.Texture = content.Load<Texture2D>(@"images/V-2");
-            this._graphics = graphics;
-
-            this.Origin = new Vector2(this.Texture.Width / 2, this.Texture.Height / 2);
-
-            this._collidableObject = new CollidableObject(this.Texture, new Vector2(100, 200), 0.0f);
+            _graphics = graphics;
+            CollidableObject = new CollidableObject(content.Load<Texture2D>(@"images/V-2"), new Vector2(100, 200), 0.0f);
 
             // Logging statement
             Console.WriteLine("Player Loaded");
@@ -31,95 +42,115 @@ namespace Missile_Master_2
 
         public void Update(GameTime gameTime)
         {
+            // Run Player Controls to update acceleration and rotation
+            Controls();
             // Get new direction
-            this.Direction = new Vector2((float) Math.Cos(this._collidableObject.Rotation), (float) Math.Sin(this._collidableObject.Rotation));
+            Direction = new Vector2((float)Math.Cos(CollidableObject.Rotation), (float)Math.Sin(CollidableObject.Rotation));
+            // Get new velocity
+            Velocity += Direction * Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            this._timer += gameTime.ElapsedGameTime.TotalMilliseconds;
+            // TODO : Edge Collision
 
-            if (this._timer > 250)
-            {
-                this._timer = 0;
+            // TODO : Object collision using CollidableObject class
 
-                Console.WriteLine("direction" + this.Direction);
-                Console.WriteLine("rotation" + this._collidableObject.Rotation);
-                Console.WriteLine("acceleration" + this.Acceleration);
-                Console.WriteLine("position" + this._collidableObject.Position);
-            }
+            // TODO : fix hiccup during moving away from border
 
-            // Run Player Controlls
-            Controlls();
-            this.Velocity += this.Direction * this.Acceleration * (float) gameTime.ElapsedGameTime.TotalSeconds;
+            //if (CollidableObject.Position.X > Game1.ScreenBounds.X / 2 + 5 && CollidableObject.Position.X < Game1.ScreenBounds.X - 5)
+            //{
+            //    InGame.MoveBackground(new Vector2(Velocity.X, 0));
+            //}
+
+            //if (CollidableObject.Position.Y > Game1.ScreenBounds.Y / 2 + 5 && CollidableObject.Position.Y < Game1.ScreenBounds.Y - 5)
+            //{
+            //    InGame.MoveBackground(new Vector2(0, Velocity.Y));
+            //}
+
+
+            // Moves Background
+            InGame.MoveBackground(Velocity);
 
             // Update position
-            this._collidableObject.Position += this.Velocity;
+            // If player reaches a place where the background no longer can move any further along the X-axis,
+            if (InGame.MovableBackground1.IsSourceMaxX || InGame.MovableBackground1.IsSourceMinX) // TODO : Make Movable background depend on current level
+            {
+                // Then move player itself instead of background,
+                CollidableObject.Position.X += Velocity.X;
+            }
+            else
+            {
+                // Else move player to center of screen X-axis.
+                CollidableObject.Position.X = Game1.ScreenBounds.X / 2;
+            }
+
+            // If player reaches a place where the background no longer can move any further along the Y-axis, 
+            if (InGame.MovableBackground1.IsSourceMaxY || InGame.MovableBackground1.IsSourceMinY)
+            {
+                // Then move player itself instead of background,
+                CollidableObject.Position.Y += Velocity.Y;
+            }
+            else
+            {
+                // Else move player to center of screen Y-axis.
+                CollidableObject.Position.Y = Game1.ScreenBounds.Y / 2;
+            }
 
             // Slowdown
-            this.Acceleration *= 0.90f;
-            this.Velocity *= 0.9f;
+            Acceleration *= 0.90f;
+            Velocity *= 0.95f;
 
-            if (this.Acceleration < 0.2)
+            // TODO : change Acceleration stopping
+            if (Acceleration < 0.1)
             {
-                this.Acceleration = 0;
+                Acceleration = 0;
             }
         }
 
 
         /// <summary>
-        ///     keyboard controlls for ingame
+        ///     keyboard controls for InGame
         /// </summary>
-        private void Controlls()
+        private void Controls()
         {
-            // Get keyboard
-            this._keyboard = Keyboard.GetState();
+            // Get keyboard state
+            _keyboard = Keyboard.GetState();
 
-            if (this._keyboard.IsKeyDown(Keys.W) || this._keyboard.IsKeyDown(Keys.Up))
+            // If W or Up arrow is key pressed down
+            if (_keyboard.IsKeyDown(Keys.W) || _keyboard.IsKeyDown(Keys.Up))
             {
-                this.Acceleration++;
-
+                // Activate main thruster increasing acceleration
+                Acceleration += 3;
                 // TODO : Add fuel usage
             }
 
-            if (this._keyboard.IsKeyDown(Keys.A) || this._keyboard.IsKeyDown(Keys.Left))
+            // If A or Left arrow key is pressed down
+            if (_keyboard.IsKeyDown(Keys.A) || _keyboard.IsKeyDown(Keys.Left))
             {
-                this._collidableObject.Rotation -= this.rotationRate;
+                // Activate right side thrusters, rotating counter-clockwise
+                CollidableObject.Rotation -= rotationRate;
             }
 
-            if (this._keyboard.IsKeyDown(Keys.S) || this._keyboard.IsKeyDown(Keys.Down))
+            // If S or Down arrow key is pressed down
+            if (_keyboard.IsKeyDown(Keys.S) || _keyboard.IsKeyDown(Keys.Down))
             {
-                // Brake
-                this.Acceleration *= 0.6f;
+                // Activate counter thrusters decreasing acceleration
+                Acceleration -= 1;
             }
 
-            if (this._keyboard.IsKeyDown(Keys.D) || this._keyboard.IsKeyDown(Keys.Right))
+            // If D or Right arrow key is pressed down
+            if (_keyboard.IsKeyDown(Keys.D) || _keyboard.IsKeyDown(Keys.Right))
             {
-                this._collidableObject.Rotation += this.rotationRate;
+                // Activate left side thrusters, rotating clockwise
+                CollidableObject.Rotation += rotationRate;
             }
         }
-
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(this.Texture, this._collidableObject.Position, null, Color.White, this._collidableObject.Rotation, this.Origin, 1.0f, SpriteEffects.None, 0.0f);
-        }
-
-        #region Fields
-
-        private GraphicsDevice _graphics;
-        public Texture2D Texture;
-        public Vector2 Velocity; // TODO : Make air-resistance and more fluid movement
-        public float Acceleration;
-        public Vector2 Origin;
-        public Vector2 Direction;
 
         /// <summary>
-        ///     Rotation of player in radians
+        ///     Draw Player
         /// </summary>
-        private readonly float rotationRate = MathHelper.Pi / 128f; // TODO : Add upgrade levels to rotationRate
-
-        private KeyboardState _keyboard;
-
-        private CollidableObject _collidableObject;
-
-        #endregion
+        /// <param name="spriteBatch"></param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(CollidableObject.Texture, CollidableObject.Position, null, Color.White, CollidableObject.Rotation, CollidableObject.Origin, 1.0f, SpriteEffects.None, 0.0f);
+        }
     }
 }

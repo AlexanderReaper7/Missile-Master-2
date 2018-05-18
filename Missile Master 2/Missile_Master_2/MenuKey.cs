@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework.Input;
 namespace Missile_Master_2
 {
     /// <summary>
-    ///     An object used in MenuControlls,
+    ///     An object used in MenuControls,
     ///     Prevents spam when pressing buttons in menues
     /// </summary>
     internal class MenuKey
     {
-        #region Constructors
+        /// <summary>
+        ///     used when updating keyboard
+        /// </summary>
+        private KeyboardState _keyboard;
 
         /// <summary>
         ///     Creates a new instance of MenuKey with single key
@@ -18,55 +21,8 @@ namespace Missile_Master_2
         public MenuKey(Keys key)
         {
             Console.WriteLine(key.ToString());
-            this.Key = key;
+            Key = key;
         }
-
-        #endregion
-
-        #region Instance Methods
-
-        /// <summary>
-        ///     Update MenuKey logic
-        /// </summary>
-        /// <returns>Key is pressed</returns>
-        public void Update()
-        {
-            // Get current keyboard state 
-            this.keyboard = Keyboard.GetState();
-
-            // If key is up
-            if (this.keyboard.IsKeyUp(this.Key))
-            {
-                // Then set wasKeyUp to true
-                this.WasKeyUp = true;
-            }
-
-            // If key is up and was up before, preventing 
-            if (this.keyboard.IsKeyDown(this.Key) && this.WasKeyUp)
-            {
-                // Then set wasKeyUp to false and isKeyDown to true,
-                this.WasKeyUp = false;
-                this.IsKeyDown = true;
-            }
-            else
-            {
-                // Else dont click
-                this.IsKeyDown = false;
-            }
-        }
-
-        #endregion
-
-        #region Fields
-
-        /// <summary>
-        ///     used when updating keyboard
-        /// </summary>
-        private KeyboardState keyboard;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         ///     The Key ID for this MenuKey
@@ -83,6 +39,34 @@ namespace Missile_Master_2
         /// </summary>
         public bool IsKeyDown { get; private set; }
 
-        #endregion
+        /// <summary>
+        ///     Update MenuKey logic
+        /// </summary>
+        /// <returns>Key is pressed</returns>
+        public void Update()
+        {
+            // Get current keyboard state 
+            this._keyboard = Keyboard.GetState();
+
+            // If key is up
+            if (this._keyboard.IsKeyUp(Key))
+            {
+                // Then set wasKeyUp to true
+                WasKeyUp = true;
+            }
+
+            // If key is up and was up before, preventing 
+            if (this._keyboard.IsKeyDown(Key) && WasKeyUp)
+            {
+                // Then set wasKeyUp to false and isKeyDown to true,
+                WasKeyUp = false;
+                IsKeyDown = true;
+            }
+            else
+            {
+                // Else dont click
+                IsKeyDown = false;
+            }
+        }
     }
 }
