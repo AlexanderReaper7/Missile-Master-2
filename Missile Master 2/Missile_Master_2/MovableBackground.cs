@@ -10,18 +10,18 @@ namespace Missile_Master_2
     internal class MovableBackground // TODO : Make MovableBackground static
     {
         private readonly Point _maxSourceBounds;
-        public Rectangle SourceRectangle;
 
         public bool IsSourceMaxX;
         public bool IsSourceMaxY;
         public bool IsSourceMinX;
         public bool IsSourceMinY;
+        public Rectangle SourceRectangle;
 
         /// <summary>
         ///     Creates a new MovableBackground with a texture, default destinationRectangle and a default sourceRectangle
         /// </summary>
         /// <param name="texture">The texture associated with the object</param>
-        public MovableBackground(Texture2D texture) : this(texture, new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y), new Rectangle(1, 1, Game1.ScreenBounds.X, Game1.ScreenBounds.Y))
+        public MovableBackground(Texture2D texture) : this(texture, new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y), new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y))
         {
         }
 
@@ -50,16 +50,27 @@ namespace Missile_Master_2
         /// </summary>
         public Rectangle DestinationRectangle { get; set; }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="moveByPoint"></param>
-        public void MoveBackground(Point moveByPoint)
+        public void Update()
         {
             // Checks if _sourceRectangle is not outside texture
             IsSourceMaxX = SourceRectangle.X >= _maxSourceBounds.X;
             IsSourceMaxY = SourceRectangle.Y >= _maxSourceBounds.Y;
             IsSourceMinX = SourceRectangle.X <= 0;
             IsSourceMinY = SourceRectangle.Y <= 0;
+        }
+
+        /// <summary>
+        /// Moves SourceRectangle by a point.
+        /// </summary>
+        /// <param name="moveByPoint">Point to move background by</param>
+        public void MoveBackground(Point moveByPoint)
+        {
+            // TODO: Decide if to have error documentation
+            if (moveByPoint == null)
+            {
+                throw new ArgumentNullException(nameof(moveByPoint));
+            }
+
 
             // TODO : optimize Logic  
             // X-AXIS
@@ -78,10 +89,10 @@ namespace Missile_Master_2
                     SourceRectangle.X = _maxSourceBounds.X;
                 }
             }
+
             // Else moveByPoint.X must be negative or zero
             else
             {
-                
                 // And moving will not make _sourceRectangle.X negative,
                 if (SourceRectangle.X + moveByPoint.X >= 0)
                 {
@@ -111,6 +122,7 @@ namespace Missile_Master_2
                     SourceRectangle.Y = _maxSourceBounds.Y;
                 }
             }
+
             // Else moveByPoint.Y is negative or zero
             else
             {

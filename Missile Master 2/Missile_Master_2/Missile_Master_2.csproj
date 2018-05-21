@@ -82,10 +82,12 @@
     <Compile Include="MenuControls.cs" />
     <Compile Include="MenuKey.cs" />
     <Compile Include="MovableBackground.cs" />
+    <Compile Include="Particle.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -39,13 +40,11 @@ namespace Missile_Master_2
         /// <summary>
         ///     Current GameState
         /// </summary>
-        public static Gamestates GameState = Gamestates.MainMenu; // TODO : Move GameState to separate class called GameState
+        public static Gamestates GameState = Gamestates.MainMenu; // TODO: Move GameState to separate class called GameState
 
-        // TODO : Enemy manager
-        // TODO : Collision 
-        // TODO : Particles
-        // TODO : Local World Location
-        // TODO : Uniform style
+        // TODO: Collision 
+        // TODO: Particles
+        // TODO: Uniform style
 
         /// <summary>
         ///     Main GraphicsDeviceManager
@@ -139,6 +138,9 @@ namespace Missile_Master_2
                 case Gamestates.Exit:
                     Exit();
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             base.Update(gameTime);
@@ -176,6 +178,9 @@ namespace Missile_Master_2
                 case Gamestates.Exit:
                     Exit();
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             _spriteBatch.End();

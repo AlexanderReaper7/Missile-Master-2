@@ -11,7 +11,7 @@ namespace Missile_Master_2
     public class CollidableObject
     {
         /// <summary>
-        ///     The current position of the object in world space
+        ///     The current position of the object on screen
         /// </summary>
         public Vector2 Position;
 
@@ -46,7 +46,7 @@ namespace Missile_Master_2
         /// <summary>
         ///     The pixel data of the loaded texture
         /// </summary>
-        public Color[] TextureData { get; private set; }
+        private Color[] TextureData { get; set; }
 
         /// <summary>
         ///     The rotation factor
@@ -61,17 +61,17 @@ namespace Missile_Master_2
         /// <summary>
         ///     A Rectangle that holds the width and height of the texture and zero in the X and Y points.
         /// </summary>
-        public Rectangle Rect => new Rectangle(0, 0, Texture.Width, Texture.Height);
+        private Rectangle Rect => new Rectangle(0, 0, Texture.Width, Texture.Height);
 
         /// <summary>
         ///     A Matrix based on the current rotation and position.
         /// </summary>
-        public Matrix Transform => Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) * Matrix.CreateRotationZ(Rotation) * Matrix.CreateTranslation(new Vector3(Position, 0.0f));
+        private Matrix Transform => Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) * Matrix.CreateRotationZ(Rotation) * Matrix.CreateTranslation(new Vector3(Position, 0.0f));
 
         /// <summary>
         ///     An axis aligned rectangle which fully contains an arbitrarily transformed axis aligned rectangle.
         /// </summary>
-        public Rectangle BoundingRectangle => CalculateBoundingRectangle(Rect, Transform);
+        private Rectangle BoundingRectangle => CalculateBoundingRectangle(Rect, Transform);
 
         /// <summary>
         ///     Rotates the object by the value passed in moveBy, which can be both positive or negative to rotate in different
@@ -147,12 +147,11 @@ namespace Missile_Master_2
         }
 
         /// <summary>
-        ///     Determines if there is overlap of the non-transparent pixels
-        ///     between two sprites.
+        ///     Determines if there is overlap of the non-transparent pixels between two sprites.
         /// </summary>
         /// <param name="rectangleA">Bounding rectangle of the first sprite</param>
         /// <param name="dataA">Pixel data of the first sprite</param>
-        /// <param name="rectangleB">Bouding rectangle of the second sprite</param>
+        /// <param name="rectangleB">Bounding rectangle of the second sprite</param>
         /// <param name="dataB">Pixel data of the second sprite</param>
         /// <returns>True if non-transparent pixels overlap; false otherwise</returns>
         public static bool IntersectPixels(Rectangle rectangleA, Color[] dataA, Rectangle rectangleB, Color[] dataB)
@@ -262,7 +261,7 @@ namespace Missile_Master_2
         /// <param name="rectangle">Original bounding rectangle.</param>
         /// <param name="transform">World transform of the rectangle.</param>
         /// <returns>A new rectangle which contains the transformed rectangle.</returns>
-        public static Rectangle CalculateBoundingRectangle(Rectangle rectangle, Matrix transform)
+        private static Rectangle CalculateBoundingRectangle(Rectangle rectangle, Matrix transform)
         {
             // Get all four corners in local space
             Vector2 leftTop = new Vector2(rectangle.Left, rectangle.Top);

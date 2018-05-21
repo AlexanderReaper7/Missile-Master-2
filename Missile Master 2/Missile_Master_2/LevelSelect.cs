@@ -64,7 +64,7 @@ namespace Missile_Master_2
             // Draw background in whole window TODO : Add exclusive background to level select screen
             //spriteBatch.Draw(MainMenuBg, new Rectangle(0, 0, (int) Game1.ScreenBounds.X, (int) Game1.ScreenBounds.Y), Color.White);
 
-            // Iterate through every entry in menuOptionsStr arrray
+            // Iterate through every entry in menuOptionsStr array
             for (int i = 0; i < MenuOptionsStr.Length; i++)
             {
                 // If selected menu option is int i

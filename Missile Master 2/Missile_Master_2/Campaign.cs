@@ -42,7 +42,7 @@ namespace Missile_Master_2
                         break;
 
                     case 1: // New Campaign
-                        // TODO : Add campaign
+                        // TODO: Add campaign
                         break;
 
                     case 2: // Back

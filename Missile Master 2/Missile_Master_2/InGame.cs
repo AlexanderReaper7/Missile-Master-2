@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,7 +15,7 @@ namespace Missile_Master_2
             Level2
         }
 
-        public static readonly Player Player = new Player();
+        public static Player Player = new Player();
 
         private static Levels CurrentLevel = Levels.Level1;
 
@@ -21,8 +23,9 @@ namespace Missile_Master_2
 
         public static void LoadContent(ContentManager content, GraphicsDevice graphics)
         {
+            UI.LoadContent(content);
             // Load player
-            Player.LoadContent(content, graphics);
+            Player.LoadContent(content);
 
             // Load Level 1
             Level1Content(content, graphics);
@@ -32,7 +35,7 @@ namespace Missile_Master_2
         {
             _velocityTotal += velocity;
 
-            Point point = new Point((int)velocity.X, (int)velocity.Y);
+            Point point = new Point((int)_velocityTotal.X, (int)_velocityTotal.Y);
 
             _velocityTotal.X -= (int)_velocityTotal.X;
             _velocityTotal.Y -= (int)_velocityTotal.Y;
@@ -68,7 +71,7 @@ namespace Missile_Master_2
                 Console.WriteLine("MaxY " + MovableBackground1.IsSourceMaxY);
                 Console.WriteLine("MinX " + MovableBackground1.IsSourceMinX);
                 Console.WriteLine("MinY " + MovableBackground1.IsSourceMinY);
-                Console.WriteLine("col " + );
+                Console.WriteLine("Fuel " + Player.Fuel);
 
                 Console.WriteLine("----   END   ----");
             }
@@ -76,9 +79,11 @@ namespace Missile_Master_2
 
         public static void Update(GameTime gameTime)
         {
+            MovableBackground1.Update();
             // Update player
             Player.Update(gameTime);
-
+            EnemyManager.Update(gameTime);
+            UI.Update();
             switch (CurrentLevel)
             {
                 case Levels.Level1:
@@ -108,6 +113,10 @@ namespace Missile_Master_2
 
             // Draw player
             Player.Draw(spriteBatch);
+            // Draw Enemies
+            EnemyManager.Draw(spriteBatch);
+            // Draw UI
+            UI.Draw(spriteBatch);
         }
 
         #region Level 1
@@ -122,12 +131,13 @@ namespace Missile_Master_2
         {
             MovableBackground1 = new MovableBackground(content.Load<Texture2D>(@"images/Level1Background"));
 
-            EnemyManager.AddEnemyToEnemies();
+            EnemyManager.AddEnemy(new Enemy(Player.CollidableObject.Texture, new Vector2(600f)));
+
+            EnemyManager.AddEnemy(new Enemy(content.Load<Texture2D>(@"images/GroundY+"), new Vector2(MovableBackground1.Texture.Width / 2, MovableBackground1.Texture.Height - 7))); // TODO: create relative ratios
         }
 
         private static void Level1Update(GameTime gameTime)
         {
-            EnemyManager.CheckCollisionToPlayer();
         }
 
         private static void Level1Draw(SpriteBatch spriteBatch)

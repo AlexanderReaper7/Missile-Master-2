@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Missile_Master_2
 {
     /// <summary>
-    ///     Draws and does logic for gamestate mainMenu
+    ///     Draws and does logic for the gamestate mainMenu
     /// </summary>
     internal static class MainMenu
     {
-        // TODO : Add custom font
+        // TODO: Add custom font
         // private static SpriteFont pixelArt32Normal = Game1.pixelArt32Normal;
 
         /// <summary>

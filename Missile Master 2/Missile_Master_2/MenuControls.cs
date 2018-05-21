@@ -23,9 +23,6 @@ namespace Missile_Master_2
         /// </summary>
         private Vector2 _selected;
 
-        // TODO : Move gamestate changing to here
-        // TODO : Make MenuControls static  
-
         /// <summary>
         ///     Creates a new instance of MenuControls
         /// </summary>
