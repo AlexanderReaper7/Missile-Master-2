@@ -41,7 +41,7 @@ namespace Missile_Master_2
                 switch ((int) _selected.Y)
                 {
                     case 0: // Continue
-                        Game1.GameState = Game1.Gamestates.InGame;
+                        Game1.GameState = Game1.GameStates.InGame;
                         break;
 
                     case 1: // New Campaign
@@ -49,7 +49,7 @@ namespace Missile_Master_2
                         break;
 
                     case 2: // Back
-                        Game1.GameState = Game1.Gamestates.MainMenu;
+                        Game1.GameState = Game1.GameStates.MainMenu;
                         break;
                 }
             }

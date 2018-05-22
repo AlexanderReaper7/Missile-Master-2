@@ -41,7 +41,7 @@ namespace Missile_Master_2
         /// <summary>
         ///     The currently loaded texture
         /// </summary>
-        public Texture2D Texture { get; private set; }
+        public Texture2D Texture { get; set; }
 
         /// <summary>
         ///     The pixel data of the loaded texture
@@ -133,17 +133,6 @@ namespace Missile_Master_2
         {
             LoadTexture(texture);
             Origin = origin;
-        }
-
-        /// <summary>
-        ///     Unofficial method for moving and rotating object
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="rotation"></param>
-        public void Update(Vector2 position, float rotation)
-        {
-            Position = position;
-            Rotation = rotation;
         }
 
         /// <summary>

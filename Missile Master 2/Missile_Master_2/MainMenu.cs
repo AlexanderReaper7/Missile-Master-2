@@ -11,8 +11,6 @@ namespace Missile_Master_2
     /// </summary>
     internal static class MainMenu
     {
-        // TODO: Add custom font
-        // private static SpriteFont pixelArt32Normal = Game1.pixelArt32Normal;
 
         /// <summary>
         ///     String array of menu option names
@@ -20,7 +18,7 @@ namespace Missile_Master_2
         private static readonly string[] MenuOptionsStr = {"Campaign", "Level Select", "Exit"};
 
         /// <summary>
-        ///     Vector2 array of menu option positions
+        ///     Vector2 array of menu options positions
         /// </summary>
         private static readonly Vector2[] MenuOptionsPos = {new Vector2(Game1.ScreenBounds.X / 8, 20), new Vector2(Game1.ScreenBounds.X / 8, 60), new Vector2(Game1.ScreenBounds.X / 8, 100)};
 
@@ -35,10 +33,14 @@ namespace Missile_Master_2
         public static Texture2D Background;
 
         /// <summary>
-        ///     Controlls keyboard actions in menus
+        ///     Controls keyboard actions in menus
         /// </summary>
-        private static readonly MenuControls MenuControl = new MenuControls(new Vector2(0, MenuOptionsStr.Count() - 1));
+        private static readonly MenuControls MenuControl = new MenuControls(new Vector2(0, MenuOptionsStr.Length - 1));
 
+        /// <summary>
+        /// Load MainMenu Textures, e.g the background
+        /// </summary>
+        /// <param name="content"></param>
         public static void LoadContent(ContentManager content)
         {
             Background = content.Load<Texture2D>(@"images/MainMenuBG");
@@ -47,34 +49,36 @@ namespace Missile_Master_2
         /// <summary>
         ///     Updates MainMenu gamestate logic
         /// </summary>
-        /// <param name="gameTime"></param>
-        public static void Update(GameTime gameTime)
+        public static void Update()
         {
             _selected = MenuControl.Update(); // Updates selected menu option
 
-            // If enter is pressed
-            if (MenuControl.IsEnterDown)
+            // If enter is not pressed
+            if (!MenuControl.IsEnterDown)
             {
-                // then switch gamestate
-                switch ((int) _selected.Y)
-                {
-                    // Campaign
-                    case 0:
-                        Console.WriteLine("Entering Campaign");
-                        Game1.GameState = Game1.Gamestates.Campaign;
-                        break;
+                // Then return
+                return;
+            }
+            // Else (enter is pressed) switch gamestate to
+            switch ((int) _selected.Y)
+            {
+                // Campaign
+                case 0:
+                    Game1.GameState = Game1.GameStates.Campaign;
+                    break;
 
-                    // Level select
-                    case 1:
-                        Console.WriteLine("Entering LevelSelect");
-                        Game1.GameState = Game1.Gamestates.LevelSelect;
-                        break;
+                // Level select
+                case 1:
+                    Game1.GameState = Game1.GameStates.LevelSelect;
+                    break;
 
-                    // Exit
-                    case 2:
-                        Game1.GameState = Game1.Gamestates.Exit;
-                        break;
-                }
+                // Exit
+                case 2:
+                    Game1.GameState = Game1.GameStates.Exit;
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -85,13 +89,13 @@ namespace Missile_Master_2
         public static void Draw(SpriteBatch spriteBatch)
         {
             // Draw background in whole window
-            spriteBatch.Draw(Background, new Rectangle(0, 0, (int) Game1.ScreenBounds.X, (int) Game1.ScreenBounds.Y), Color.White);
+            spriteBatch.Draw(Background, new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y), Color.White);
 
-            // Iterate through every entry in menuOptionsStr arrray
+            // Iterate through every entry in menuOptionsStr array
             for (int i = 0; i < MenuOptionsStr.Length; i++)
             {
                 // If selected menu option is int i
-                spriteBatch.DrawString(_selected.Y == i ? Game1.PixelArt32Bold : Game1.PixelArt32Normal, MenuOptionsStr[i], MenuOptionsPos[i], Color.Black);
+                spriteBatch.DrawString((int)_selected.Y == i ? Game1.PixelArt32Bold : Game1.PixelArt32Normal, MenuOptionsStr[i], MenuOptionsPos[i], Color.Black);
             }
         }
     }

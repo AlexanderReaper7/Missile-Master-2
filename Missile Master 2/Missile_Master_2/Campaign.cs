@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,8 +10,6 @@ namespace Missile_Master_2
     /// </summary>
     internal static class Campaign
     {
-        #region Fields
-
         /// <summary>
         ///     String array of menu option names
         /// </summary>
@@ -22,33 +21,36 @@ namespace Missile_Master_2
         private static readonly Vector2[] MenuOptionsPos = {new Vector2(Game1.ScreenBounds.X / 8, 20), new Vector2(Game1.ScreenBounds.X / 8, 60), new Vector2(Game1.ScreenBounds.X / 8, 100)};
 
         private static Vector2 _selected;
-        private static readonly MenuControls MenuControl = new MenuControls(new Vector2(0, MenuOptionsStr.Count() - 1));
-
-        #endregion
-
-        #region Static Methods
+        private static readonly MenuControls MenuControl = new MenuControls(new Vector2(0, MenuOptionsStr.Length - 1));
 
         public static void Update(GameTime gameTime)
         {
             _selected = MenuControl.Update(); // Update selected
 
-            // Change gamestate to the selected menu option upon ENTER
-            if (MenuControl.IsEnterDown)
+            // TODO: Add campaign
+            // If enter is not pressed
+            if (!MenuControl.IsEnterDown)
             {
-                switch ((int) _selected.Y)
-                {
-                    case 0: // Continue
-                        Game1.GameState = Game1.Gamestates.InGame;
-                        break;
+                // Then return
+                return;
+            }
+            // Else (enter is pressed) 
+            switch ((int) _selected.Y)
+            {
+                case 0: // Continue
+                    Game1.GameState = Game1.GameStates.InGame;
+                    break;
 
-                    case 1: // New Campaign
-                        // TODO: Add campaign
-                        break;
+                case 1: // New Campaign
+                    Game1.GameState = Game1.GameStates.InGame;
+                    break;
 
-                    case 2: // Back
-                        Game1.GameState = Game1.Gamestates.MainMenu;
-                        break;
-                }
+                case 2: // Back
+                    Game1.GameState = Game1.GameStates.MainMenu;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -68,7 +70,5 @@ namespace Missile_Master_2
                 spriteBatch.DrawString(_selected.Y == i ? Game1.PixelArt32Bold : Game1.PixelArt32Normal, MenuOptionsStr[i], MenuOptionsPos[i], Color.Black);
             }
         }
-
-        #endregion
     }
 }

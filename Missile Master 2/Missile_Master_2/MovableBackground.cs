@@ -9,6 +9,7 @@ namespace Missile_Master_2
     /// </summary>
     internal class MovableBackground // TODO : Make MovableBackground static
     {
+        // TODO: Document me
         private readonly Point _maxSourceBounds;
 
         public bool IsSourceMaxX;
@@ -18,10 +19,11 @@ namespace Missile_Master_2
         public Rectangle SourceRectangle;
 
         /// <summary>
-        ///     Creates a new MovableBackground with a texture, default destinationRectangle and a default sourceRectangle
+        ///     Creates a new MovableBackground with a texture, sourceRectangle and a default destinationRectangle  
         /// </summary>
         /// <param name="texture">The texture associated with the object</param>
-        public MovableBackground(Texture2D texture) : this(texture, new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y), new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y))
+        /// <param name="sourceRectangle">The source rectangle used to pick what piece of the texture will be drawn</param>        
+        public MovableBackground(Texture2D texture, Rectangle sourceRectangle) : this(texture, new Rectangle(0, 0, Game1.ScreenBounds.X, Game1.ScreenBounds.Y), sourceRectangle)
         {
         }
 
@@ -50,6 +52,9 @@ namespace Missile_Master_2
         /// </summary>
         public Rectangle DestinationRectangle { get; set; }
 
+        /// <summary>
+        /// Update Bounds detection
+        /// </summary>
         public void Update()
         {
             // Checks if _sourceRectangle is not outside texture
@@ -140,6 +145,10 @@ namespace Missile_Master_2
             }
         }
 
+        /// <summary>
+        /// Draws background with a texture, DestinationRectangle, SourceRectangle and a color
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw Background

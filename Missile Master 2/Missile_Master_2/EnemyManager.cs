@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -18,6 +19,11 @@ namespace Missile_Master_2
         public static void AddEnemy(Enemy enemy)
         {
             Enemies.Add(enemy);
+        }
+
+        public static void ClearEnemies()
+        {
+            Enemies.Clear();
         }
 
         public static bool CheckCollisionToPlayer()

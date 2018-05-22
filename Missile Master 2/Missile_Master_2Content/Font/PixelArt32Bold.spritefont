@@ -9,9 +9,9 @@ with.
   <Asset Type="Graphics:FontDescription">
 
     <!--
-    Modify this string to change the font that will be imported.
+    Modify this string to change the font that will be imported. TODO: Change this font to a custom one
     -->
-    <FontName>Calibri</FontName>
+    <FontName>Calibri</FontName> 
 
     <!--
     Size is a float value, measured in points. Modify this value to change

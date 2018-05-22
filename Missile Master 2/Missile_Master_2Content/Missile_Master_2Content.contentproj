@@ -58,13 +58,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="images\world1.jpg">
-      <Name>Level1Background</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="images\GroundY+.png">
       <Name>GroundY+</Name>
       <Importer>TextureImporter</Importer>
@@ -81,6 +74,34 @@
   <ItemGroup>
     <Compile Include="images\pixel.png">
       <Name>pixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="images\Transparent1px.png">
+      <Name>Transparent1px</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="images\Explosion1.png">
+      <Name>Explosion1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="images\SmallExplosion1.png">
+      <Name>SmallExplosion1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="images\Level1BG.png">
+      <Name>Level1BG</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

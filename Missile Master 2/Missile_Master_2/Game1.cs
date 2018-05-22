@@ -13,7 +13,7 @@ namespace Missile_Master_2
         /// <summary>
         ///     List of states for the game
         /// </summary>
-        public enum Gamestates
+        public enum GameStates
         {
             MainMenu,
             Campaign,
@@ -40,7 +40,7 @@ namespace Missile_Master_2
         /// <summary>
         ///     Current GameState
         /// </summary>
-        public static Gamestates GameState = Gamestates.MainMenu; // TODO: Move GameState to separate class called GameState
+        public static GameStates GameState = GameStates.MainMenu; // TODO: Move GameState to separate class called GameState
 
         // TODO: Collision 
         // TODO: Particles
@@ -87,8 +87,9 @@ namespace Missile_Master_2
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             MainMenu.LoadContent(Content);
-            InGame.LoadContent(Content, GraphicsDevice);
+            InGame.LoadContent(Content);
 
+            // Load spritefonts
             PixelArt32Normal = Content.Load<SpriteFont>(@"Font/PixelArt32Normal");
             PixelArt32Bold = Content.Load<SpriteFont>(@"Font/PixelArt32Bold");
         }
@@ -117,25 +118,26 @@ namespace Missile_Master_2
                 Exit();
             }
 
+            // TODO: document me!
             switch (GameState)
             {
-                case Gamestates.MainMenu:
-                    MainMenu.Update(gameTime);
+                case GameStates.MainMenu:
+                    MainMenu.Update();
                     break;
 
-                case Gamestates.Campaign:
+                case GameStates.Campaign:
                     Campaign.Update(gameTime);
                     break;
 
-                case Gamestates.InGame:
+                case GameStates.InGame:
                     InGame.Update(gameTime);
                     break;
 
-                case Gamestates.LevelSelect:
+                case GameStates.LevelSelect:
                     LevelSelect.Update(gameTime);
                     break;
 
-                case Gamestates.Exit:
+                case GameStates.Exit:
                     Exit();
                     break;
 
@@ -159,23 +161,23 @@ namespace Missile_Master_2
 
             switch (GameState)
             {
-                case Gamestates.MainMenu:
+                case GameStates.MainMenu:
                     MainMenu.Draw(_spriteBatch);
                     break;
 
-                case Gamestates.Campaign:
+                case GameStates.Campaign:
                     Campaign.Draw(_spriteBatch);
                     break;
 
-                case Gamestates.InGame:
+                case GameStates.InGame:
                     InGame.Draw(_spriteBatch);
                     break;
 
-                case Gamestates.LevelSelect:
+                case GameStates.LevelSelect:
                     LevelSelect.Draw(_spriteBatch);
                     break;
 
-                case Gamestates.Exit:
+                case GameStates.Exit:
                     Exit();
                     break;
 
