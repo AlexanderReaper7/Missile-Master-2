@@ -94,6 +94,8 @@ namespace Missile_Master_2
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            if(r.IsKeyDown)
+            {
 
             Log(gameTime);
         }
