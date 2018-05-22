@@ -47,7 +47,16 @@ namespace Missile_Master_2
 
             // Get new velocity TODO: re-document and refine
             _velocity += Direction * Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            // Gravity TODO:
+            if (_velocity.Y < 0)
+            {
+                _velocity.Y += 0.098f;
 
+            }
+            else
+            {
+                _velocity.Y += 0.01f * _velocity.Y;
+            }
             // Check for collisions to enemies
             _colliding = EnemyManager.CheckCollisionToPlayer();
 
@@ -96,7 +105,7 @@ namespace Missile_Master_2
             _velocity *= 0.95f;
 
             // TODO : change Acceleration stopping
-            if (Acceleration < 0.1)
+            if (Acceleration < 0.01)
             {
                 Acceleration = 0;
             }
@@ -129,7 +138,7 @@ namespace Missile_Master_2
             if ((_keyboard.IsKeyDown(Keys.W) || _keyboard.IsKeyDown(Keys.Up)) && Fuel > 0)
             {
                 // Activate main thruster increasing acceleration
-                Acceleration += 3;
+                Acceleration += 2;
 
                 // TODO : Add fuel usage
                 // Use fuel
@@ -147,7 +156,7 @@ namespace Missile_Master_2
             if (_keyboard.IsKeyDown(Keys.A) || _keyboard.IsKeyDown(Keys.Left))
             {
                 // Activate right side thrusters or fins, rotating counter-clockwise
-                CollidableObject.Rotation -= rotationRate * (float)gameTime.ElapsedGameTime.TotalSeconds * Acceleration + 0.005f;
+                CollidableObject.Rotation -= rotationRate * (float)gameTime.ElapsedGameTime.TotalSeconds * _velocity.LengthSquared() + 0.005f;
             }
 
             // If S or Down arrow key is pressed down
@@ -161,7 +170,7 @@ namespace Missile_Master_2
             if (_keyboard.IsKeyDown(Keys.D) || _keyboard.IsKeyDown(Keys.Right))
             {
                 // Activate left side thrusters or fins, rotating clockwise
-                CollidableObject.Rotation += rotationRate * (float)gameTime.ElapsedGameTime.TotalSeconds * Acceleration + 0.005f;
+                CollidableObject.Rotation += rotationRate * (float)gameTime.ElapsedGameTime.TotalSeconds * _velocity.LengthSquared() + 0.005f;
             }
         }
 
