@@ -261,7 +261,7 @@ namespace Missile_Master_2
             if (_isMainThrusterActive)
             {
                 // Draw main thruster particle
-                _mainThrusterParticle.Draw(spriteBatch);
+                //_mainThrusterParticle.Draw(spriteBatch);
             }
         }
     }

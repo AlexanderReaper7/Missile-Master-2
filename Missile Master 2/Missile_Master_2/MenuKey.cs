@@ -5,7 +5,7 @@ namespace Missile_Master_2
 {
     /// <summary>
     ///     An object used in MenuControls,
-    ///     Prevents spam when pressing buttons in menues
+    ///     Prevents spam when pressing buttons in menus
     /// </summary>
     internal class MenuKey
     {
@@ -64,7 +64,7 @@ namespace Missile_Master_2
             }
             else
             {
-                // Else dont click
+                // Else don't click
                 IsKeyDown = false;
             }
         }
