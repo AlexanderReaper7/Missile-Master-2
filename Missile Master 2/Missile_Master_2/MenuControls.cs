@@ -9,11 +9,6 @@ namespace Missile_Master_2
     internal class MenuControls
     {
         /// <summary>
-        ///     Array of MenuKey, every key is checked in Update()
-        /// </summary>
-        private readonly MenuKey[] _menuKeys = {new MenuKey(Keys.W), new MenuKey(Keys.A), new MenuKey(Keys.S), new MenuKey(Keys.D), new MenuKey(Keys.Up), new MenuKey(Keys.Left), new MenuKey(Keys.Down), new MenuKey(Keys.Right), new MenuKey(Keys.Enter), new MenuKey(Keys.Escape)};
-
-        /// <summary>
         ///     Number of menu options
         /// </summary>
         private readonly Vector2 _selectionMax;
@@ -48,16 +43,11 @@ namespace Missile_Master_2
         /// <returns>New Vector2 position</returns>
         public Vector2 Update()
         {
-            // For every MenuKey in the menuKeys array
-            foreach (MenuKey menukey in this._menuKeys)
-            {
-                // Update the current MenuKey in menuKeys array
-                menukey.Update();
-
-                // TODO : Change these if statements to a switch
+            // Update Menukey
+            MenuKey.Update();
 
                 // When W or UP arrow keys are pressed
-                if (( menukey.Key == Keys.W || menukey.Key == Keys.Up ) && menukey.IsKeyDown)
+                if (( MenuKey.SingleActivationKey(Keys.W)  || MenuKey.SingleActivationKey(Keys.Up) ))
                 {
                     // And selected.Y is GREATER THAN 0, preventing it from becoming negative,
                     if (this._selected.Y > 0)
@@ -67,8 +57,8 @@ namespace Missile_Master_2
                     }
                 }
 
-                // When A or Left arrow keys are pressed
-                if (( menukey.Key == Keys.A || menukey.Key == Keys.Left ) && menukey.IsKeyDown)
+            // When A or Left arrow keys are pressed
+            if ((MenuKey.SingleActivationKey(Keys.A) || MenuKey.SingleActivationKey(Keys.Left)))
                 {
                     // And selected.X is GREATER THAN 0, preventing it from becoming negative
                     if (this._selected.X > 0)
@@ -78,8 +68,8 @@ namespace Missile_Master_2
                     }
                 }
 
-                // When S or Down arrow keys are pressed
-                if (( menukey.Key == Keys.S || menukey.Key == Keys.Down ) && menukey.IsKeyDown)
+            // When S or Down arrow keys are pressed
+            if ((MenuKey.SingleActivationKey(Keys.S) || MenuKey.SingleActivationKey(Keys.Down)))
                 {
                     // And selected.Y is LESS THAN selectionMax.Y, preventing it from exceeding maximum Y selection range,
                     if (this._selected.Y < this._selectionMax.Y)
@@ -89,8 +79,8 @@ namespace Missile_Master_2
                     }
                 }
 
-                // When D or Right arrow keys are pressed
-                if (( menukey.Key == Keys.D || menukey.Key == Keys.Right ) && menukey.IsKeyDown)
+            // When D or Right arrow keys are pressed
+            if ((MenuKey.SingleActivationKey(Keys.D) || MenuKey.SingleActivationKey(Keys.Right)))
                 {
                     // And selected.X is LESS THAN selectionMax.X, preventing it from exceeding maximum X selection range, 
                     if (this._selected.X < this._selectionMax.X)
@@ -98,27 +88,27 @@ namespace Missile_Master_2
                         // Then add selected.X by 1
                         this._selected.X++;
                     }
-                }
 
-                // Switch is used non-duplicated keys
-                switch (menukey.Key)
-                {
-                    // If current menukey is Enter
-                    case Keys.Enter:
+                // if Enter is pressed
+                    if (MenuKey.SingleActivationKey(Keys.Enter))
+                    {
+                        IsEnterDown = true;
+                    }
+                    else
+                    {
+                        IsEnterDown = false;
+                    }
 
-                        // And it is pressed
-                        IsEnterDown = menukey.IsKeyDown;
+                // If Escape pressed
+                    if (MenuKey.SingleActivationKey(Keys.Escape))
+                    {
+                        IsEscapeDown = true;
+                    }
+                    else
+                    {
+                        IsEscapeDown = false;
+                    }
 
-                        break;
-
-                    // If current menukey is Escape
-                    case Keys.Escape:
-
-                        // And it is pressed
-                        IsEscapeDown = menukey.IsKeyDown;
-
-                        break;
-                }
             }
 
             // Return updated selected

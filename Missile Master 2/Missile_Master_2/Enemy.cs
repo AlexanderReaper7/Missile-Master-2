@@ -51,7 +51,7 @@ namespace Missile_Master_2
             // Create a new CollidableObject with alive texture and spawn
             CollidableObject = new CollidableObject(aliveTexture2D, spawnPosition);
             // Logging statement
-            Console.WriteLine("Created a new enemy with position of " + CollidableObject.Position); // TODO: Remove logging statement when done
+            // Console.WriteLine("Created a new enemy with position of " + CollidableObject.Position);
         }
 
         public void Explode()
