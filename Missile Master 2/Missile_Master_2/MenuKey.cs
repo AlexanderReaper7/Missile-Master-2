@@ -31,14 +31,7 @@ namespace Missile_Master_2
         public static bool SingleActivationKey(Keys key)
         {
             // If key is down but was up before
-            if (_currentKeyboardState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _currentKeyboardState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key);
         }
     }
 }
